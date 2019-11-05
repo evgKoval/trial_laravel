@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('front');
 });
 
+Route::get('/products.js');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

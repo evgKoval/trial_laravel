@@ -1829,9 +1829,9 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductComponent.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProductComponent.vue?vue&type=script&lang=js& ***!
   \***************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -1854,9 +1854,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  name: 'product',
+  props: {
+    product: {
+      type: Object
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductsComponent.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProductsComponent.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _products_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../products.json */ "./products.json");
+var _products_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../../../products.json */ "./products.json", 1);
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'products',
+  data: function data() {
+    return {
+      products: _products_json__WEBPACK_IMPORTED_MODULE_0__
+    };
   }
 });
 
@@ -66688,9 +66723,9 @@ var e=function(){return(e=Object.assign||function(e){for(var t,r=1,s=arguments.l
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductComponent.vue?vue&type=template&id=9e91ef8e&":
 /*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProductComponent.vue?vue&type=template&id=9e91ef8e& ***!
   \*******************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -66703,32 +66738,67 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
+  return _c(
+    "b-card",
+    {
+      staticClass: "mb-4",
+      attrs: {
+        title: _vm.product.name,
+        "img-src": _vm.product.img,
+        "img-alt": "Image",
+        "img-top": "",
+        tag: "article"
+      }
+    },
+    [
+      _c("b-card-text", [
+        _vm._v("\n        " + _vm._s(_vm.product.price) + "\n    ")
+      ]),
+      _vm._v(" "),
+      _c("b-button", { attrs: { href: "#", variant: "warning" } }, [
+        _vm._v("Add to cart")
       ])
-    ])
-  }
-]
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductsComponent.vue?vue&type=template&id=5ecce49e&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProductsComponent.vue?vue&type=template&id=5ecce49e& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "row" },
+    _vm._l(_vm.products, function(product, index) {
+      return _c(
+        "div",
+        { key: index, staticClass: "col-md-4" },
+        [_c("product", { attrs: { product: product } })],
+        1
+      )
+    }),
+    0
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -78871,6 +78941,17 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./products.json":
+/*!***********************!*\
+  !*** ./products.json ***!
+  \***********************/
+/*! exports provided: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("[{\"name\":\"HP 8300 Elite Small Form Factor Desktop Computer, Intel Core i5-3470 3.2GHz Quad-Core,…\",\"price\":\"$137.98\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/5123N16rLNL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Dell Inspiron Desktop, Intel Core i3-8100, Intel UHD 630, 1TB HDD Storage, 8GB RAM, i3470…\",\"price\":\"$319.00\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/61I25VnN5CL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"CYBERPOWERPC Gamer Xtreme VR Gaming PC, Intel Core i5-9400F 2.9GHz, NVIDIA GeForce…\",\"price\":\"$709.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/7163XCA83hL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"HP Elite 7900 Desktop PC Package, Intel Core 2 Duo Processor, 8GB RAM, 500GB Hard Drive,…\",\"price\":\"$137.01\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/81c01p29qsL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"HP Flagship Pro Desktop 2018 Computer, Core I5 Up to 3.6GHz, 8GB, 512GB SSD, WiFi, DVD, DP,…\",\"price\":\"$188.91\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/81bXglQm3UL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Acer Aspire TC-885-UA92 Desktop, 9th Gen Intel Core i5-9400, 12GB DDR4, 512GB SSD, 8X…\",\"price\":\"$499.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/61UgXsi%2BmcL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Dell Optiplex 7010 Business Desktop Computer (Intel Quad Core i5-3470 3.2GHz, 16GB RAM,…\",\"price\":\"$203.28\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/71qQg3bAMjL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Dell OptiPlex, Intel Core 2 Duo 2.9GHz Processor, 4GB Memory, 160GB Hard Drive, DVD, Windows…\",\"price\":\"$83.00\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/716-FpGj45L._AC_UL200_SR200,200_.jpg\"},{\"name\":\"HP Elite Desktop Computer, Intel Core i5 3.1GHz, 8GB RAM, 1TB SATA HDD, Keyboard & Mouse,…\",\"price\":\"$195.00\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/81lI%2BQyoEwL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Acer Aspire C24-865-UA91 AIO Desktop, 23.8\\\" Full HD, 8th Gen Intel Core i5-8250U, 8GB DDR4,…\",\"price\":\"$599.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/81cdiTajZSL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"CYBERPOWERPC Gamer Supreme Liquid Cool Gaming PC, Intel Core i7-9700K 3.6GHz, NVIDIA…\",\"price\":\"$1,369.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/81kVandDmdL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"DELL Optiplex Desktop with 22in LCD Monitor (Core 2 Duo 3.0Ghz, 8GB RAM, 1TB HDD,…\",\"price\":\"$149.02\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/61JQdvlZlNL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Dell Inspiron Gaming PC Desktop AMD Ryzen 7 2700 Processor, 16GB DRAM, 1TB HDD, AMD…\",\"price\":\"$629.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/617LZ7j3uCL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Mini PC,ACEPC T11 Windows 10 Pro(64-bit) Intel x5-Z8350 Fanless Mini Computer with HDMI/VGA…\",\"price\":\"$149.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/51Cfis34EnL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Dell OP3060MFFXKF5K OptiPlex 3060 XKF5K Micro PC with Intel Core i5-8500T 2.1 GHz Hexa…\",\"price\":\"$612.98\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/61cbZP4oO8L._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Fanless Mini PC,Intel Atom Z8350 Computer Stick Windows 10 Pro 64 Bit,4GB DDR 64GB…\",\"price\":\"$159.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/615NkRfVChL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"iBUYPOWER Gaming PC Computer Desktop Element 9260 (Intel Core i7-9700F 3.0Ghz,…\",\"price\":\"$999.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/81GToTDrV5L._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Acer Aspire TC-885-UA91 Desktop, 9th Gen Intel Core i3-9100, 8GB DDR4, 512GB SSD, 8X DVD,…\",\"price\":\"$419.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/61UgXsi%2BmcL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"W5 Pro Mini PC Intel Atom Z8350 Windows 10 Computer Stick 4GB DDR 64GB eMMC Support…\",\"price\":\"$159.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/514l1lcRZcL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"HP ProDesk 600 G1 SFF Slim Business Desktop Computer, Intel i5-4570 up to 3.60 GHz, 8GB…\",\"price\":\"$135.17\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/41wOehgwHOL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Acer Aspire Z24-890-UA91 AIO Desktop, 23.8\\\" Full HD, 9th Gen Intel Core i5-9400T, 12GB DDR4,…\",\"price\":\"$749.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/81ODwqmdl6L._AC_UL200_SR200,200_.jpg\"},{\"name\":\"2018 Dell Optiplex 7010 Small Form Factor Desktop Computer, Intel Quad-Core i7-3770 Up to…\",\"price\":\"$268.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/61HI%2BwFFlCL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Dell OptiPlex 3060 SFF Desktop Computer with Intel Core i5-8500 3 GHz Hexa-core, 8GB RAM,…\",\"price\":\"$663.00\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/71wbjlsuR0L._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Dell Optiplex 990 SFF Flagship Premium Business Desktop Computer (Intel Quad-Core i5-2400 up to…\",\"price\":\"$183.00\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/71JidJ0DLqL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"New Apple Mac mini (3.6GHz quad-core Intel Core i3 processor, 128GB) - Space Gray\",\"price\":\"$750.15\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/417Rrw%2BquyL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"HP EliteDesk 800 G1 Small Form Desktop Computer Tower PC (Intel Quad Core i5-4570,…\",\"price\":\"$208.89\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/615RR7W6xEL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"HP Elite 8300 Ultra Small Slim High Performance Business Computer PC (Intel 3470s 2.9Ghz),…\",\"price\":\"$144.48\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/710BUNTy50L._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Lenovo ThinkCentre M92p Business Desktop Computer - Intel Core i7 Up to 3.9GHz, 16GB…\",\"price\":\"$275.00\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/41Y9m-FTJxL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Dell Optiplex 990 Desktop Computer, i7 upto 3.8GHz CPU, 16GB DDR3 Memory, New 512GB…\",\"price\":\"$319.90\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/919EILO90JL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Fanless Mini PC,Intel x5-Z8350 HD Graphics Mini Computer,Windows 10 64-bit,DDR3L 2GB/32GB…\",\"price\":\"$109.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/61D9eeZjIfL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Dell Optiplex 7010 SFF Desktop PC - Intel Core i5-3470 3.2GHz 8GB 250GB DVD Windows 10 Pro…\",\"price\":\"$135.00\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/61adT%2Bnpi9L._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Apple iMac 21.5in 2.7GHz Core i5 (ME086LL/A) All In One Desktop, 8GB Memory, 1TB Hard Drive,…\",\"price\":\"$385.00\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/71pheYd9W0L._AC_UL200_SR200,200_.jpg\"},{\"name\":\"HP 22-Inch All-in-One Computer, AMD A4-9125, 4GB RAM, 1TB Hard Drive, Windows 10 (22…\",\"price\":\"$349.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/81oH-f4vR2L._AC_UL200_SR200,200_.jpg\"},{\"name\":\"HP Elite C2D 3.0ghz, New 4GB Memory, 250GB, Windows 10 Professional (Renewed)\",\"price\":\"$85.98\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/41lnKuMIFzL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Dell Optiplex 9020 Small Form Business Desktop Tower PC (Intel Quad Core i7 4770, 16GB Ram,…\",\"price\":\"$334.89\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/71lASxtDjzL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"HP Elite Desktop Computer, Intel Core 2 Duo 2.9 GHz, 8 GB RAM, 1 TB SATA HDD, Keyboard &…\",\"price\":\"$159.00\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/71tfeIYA2CL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Dell Optiplex 790 Core i5 3.1GHz, 1TB Hard Drive, 16GB Memory, Windows 10 x64, Dual 19…\",\"price\":\"$217.50\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/71HQYtB5qJL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"ACEPC AK1 Mini PC, Windows 10 (64-bit) Intel Celeron Apollo Lake J3455 Processor(up to…\",\"price\":\"$189.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/618MLhX47yL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Mini PC Fanless Intel Atom Quad Core CPU 4GB DDR/64GB eMMC Mini Desktop Computer…\",\"price\":\"$149.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/6105v4UK8WL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Dell Inspiron 3470 Desktop, 2 Year Onsite Warranty, Windows 10 Pro, 9th Gen Intel Core i5-9400 6…\",\"price\":\"$679.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/61S-V8cqufL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"[Ryzen & GTX 1050 Ti Edition] SkyTech Archangel Gaming Computer Desktop PC Ryzen 1200…\",\"price\":\"$632.49\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/81aVtkFWenL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Z83-F Mini PC Fanless Silent Desktop 4GB RAM, 64GB eMMC Micro PC, HD Intel Quad Core CPU…\",\"price\":\"$149.90\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/71gS%2BeJCJvL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Dell Optiplex 9020 Ultra Small Tiny Desktop Micro Computer PC (Intel Core i5-4570T, 8GB Ram,…\",\"price\":\"$269.90\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/71UD6C4HpsL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"2018 HP EliteDesk 800 G2 Mini Business Desktop PC Intel Quad-Core i5-6500T up to 3.1G,8G…\",\"price\":\"$324.85\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/51x6YAQdvfL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Dell Optiplex 9020 Mini Tower Desktop PC, Intel Core i7-4770-3.4 GHz, 32GB Ram, 512GB SSD…\",\"price\":\"$397.49\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/81fRFWfXNXL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"New Apple Mac mini (3.0GHz 6-core Intel Core i5 processor, 256GB) - Space Gray\",\"price\":\"$1,029.00\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/417Rrw%2BquyL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"HP Desktop Computer, Core 2 Duo 3.0 GHz Processor, 4GB, 160GB, DVD, WiFi Adapter,…\",\"price\":\"$119.00\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/81cqE9ieNbL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Acer Aspire C24-865-ACi5NT AIO Desktop, 23.8\\\" Full HD, 8th Gen Intel Core i5-8250U, 12GB…\",\"price\":\"$649.99\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/71YktzGiStL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Apple iMac MD093LL/A 21.5-Inch 1TB Desktop (Renewed)\",\"price\":\"$399.00\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/71jiqxxvxDL._AC_UL200_SR200,200_.jpg\"},{\"name\":\"Apple iMac MC309LL/A 21.5-Inch 500GB HDD Desktop - (Renewed)\",\"price\":\"$283.20\",\"img\":\"https://images-na.ssl-images-amazon.com/images/I/71%2BsAlmbdDL._AC_UL200_SR200,200_.jpg\"}]");
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -78908,7 +78989,8 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
+Vue.component('products', __webpack_require__(/*! ./components/ProductsComponent.vue */ "./resources/js/components/ProductsComponent.vue")["default"]);
+Vue.component('product', __webpack_require__(/*! ./components/ProductComponent.vue */ "./resources/js/components/ProductComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -78966,17 +79048,17 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/components/ExampleComponent.vue":
+/***/ "./resources/js/components/ProductComponent.vue":
 /*!******************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue ***!
+  !*** ./resources/js/components/ProductComponent.vue ***!
   \******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ExampleComponent.vue?vue&type=template&id=299e239e& */ "./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&");
-/* harmony import */ var _ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ExampleComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _ProductComponent_vue_vue_type_template_id_9e91ef8e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProductComponent.vue?vue&type=template&id=9e91ef8e& */ "./resources/js/components/ProductComponent.vue?vue&type=template&id=9e91ef8e&");
+/* harmony import */ var _ProductComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProductComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ProductComponent.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -78986,9 +79068,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _ProductComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ProductComponent_vue_vue_type_template_id_9e91ef8e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ProductComponent_vue_vue_type_template_id_9e91ef8e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -78998,38 +79080,107 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/ExampleComponent.vue"
+component.options.__file = "resources/js/components/ProductComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
+/***/ "./resources/js/components/ProductComponent.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
+  !*** ./resources/js/components/ProductComponent.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ExampleComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ProductComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
+/***/ "./resources/js/components/ProductComponent.vue?vue&type=template&id=9e91ef8e&":
 /*!*************************************************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
+  !*** ./resources/js/components/ProductComponent.vue?vue&type=template&id=9e91ef8e& ***!
   \*************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ExampleComponent.vue?vue&type=template&id=299e239e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductComponent_vue_vue_type_template_id_9e91ef8e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ProductComponent.vue?vue&type=template&id=9e91ef8e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductComponent.vue?vue&type=template&id=9e91ef8e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductComponent_vue_vue_type_template_id_9e91ef8e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductComponent_vue_vue_type_template_id_9e91ef8e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ProductsComponent.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/ProductsComponent.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ProductsComponent_vue_vue_type_template_id_5ecce49e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProductsComponent.vue?vue&type=template&id=5ecce49e& */ "./resources/js/components/ProductsComponent.vue?vue&type=template&id=5ecce49e&");
+/* harmony import */ var _ProductsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProductsComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ProductsComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ProductsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ProductsComponent_vue_vue_type_template_id_5ecce49e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ProductsComponent_vue_vue_type_template_id_5ecce49e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ProductsComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ProductsComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/ProductsComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ProductsComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductsComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ProductsComponent.vue?vue&type=template&id=5ecce49e&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/ProductsComponent.vue?vue&type=template&id=5ecce49e& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductsComponent_vue_vue_type_template_id_5ecce49e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ProductsComponent.vue?vue&type=template&id=5ecce49e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductsComponent.vue?vue&type=template&id=5ecce49e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductsComponent_vue_vue_type_template_id_5ecce49e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductsComponent_vue_vue_type_template_id_5ecce49e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
