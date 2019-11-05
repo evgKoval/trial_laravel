@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "bootstrap-vue": "^2.0.4",
-        "puppeteer": "^2.0.0"
+        "puppeteer": "^2.0.0",
+        "vuejs-datepicker": "^1.6.2"
     }
 }
