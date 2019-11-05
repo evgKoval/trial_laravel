@@ -1888,10 +1888,36 @@ var _products_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpa
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'products',
-  data: function data() {
-    return {
-      products: _products_json__WEBPACK_IMPORTED_MODULE_0__
-    };
+  props: {
+    query: {
+      type: String
+    }
+  },
+  computed: {
+    products: function products() {
+      var _this = this;
+
+      console.log(this.query);
+      var searched = [];
+
+      if (this.query) {
+        searched = _products_json__WEBPACK_IMPORTED_MODULE_0__.filter(function (elem) {
+          return elem.name.toLowerCase().includes(_this.query.toLowerCase());
+        });
+      } else {
+        return _products_json__WEBPACK_IMPORTED_MODULE_0__;
+      }
+
+      return searched;
+    }
+  },
+  mounted: function mounted() {// if (this.query) {
+    //     const arr = this.products.filter((elem) => {
+    //         console.log(elem.name.toLowerCase().includes(this.query));
+    //         return elem.name.toLowerCase().includes(this.query.toLowerCase());
+    //     })
+    //     console.log(arr);
+    // }
   }
 });
 

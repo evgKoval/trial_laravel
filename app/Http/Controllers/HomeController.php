@@ -25,4 +25,11 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        return view('search', compact('query'));
+    }
 }

@@ -11,10 +11,37 @@
 
     export default {
         name: 'products',
-        data() {
-            return {
-                products
-            };
+        props: {
+            query: {
+                type: String
+            }
+        },
+        computed: {
+            products() {
+                console.log(this.query);
+
+                let searched = [];
+
+                if (this.query) {
+                    searched = products.filter((elem) => {
+                        return elem.name.toLowerCase().includes(this.query.toLowerCase());
+                    })
+                } else {
+                    return products
+                }
+
+                return searched
+            }
+        },
+        mounted() {
+            
+            // if (this.query) {
+            //     const arr = this.products.filter((elem) => {
+            //         console.log(elem.name.toLowerCase().includes(this.query));
+            //         return elem.name.toLowerCase().includes(this.query.toLowerCase());
+            //     })
+            //     console.log(arr);
+            // }
         }
     }
 </script>
