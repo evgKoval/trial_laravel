@@ -3,10 +3,10 @@
 @section('content')
 
     <div class="container">
-        <section>
-            <example-component></example-component>
-            <b-button variant="danger">Button</b-button>
-        </section>
+        <div class="row">
+            <h1 class="mb-4">Best Sellers in Desktop Computers</h1>
+        </div>
+        <products></products>
     </div>
 
 @endsection
