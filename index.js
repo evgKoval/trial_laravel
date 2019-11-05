@@ -10,11 +10,23 @@ let scrape = async () => {
     const result = await page.evaluate(() => {
         const array = [];
 
+        function randomDate() {
+            const startDate = new Date(2019, 10, 1).getTime();
+            const endDate =  new Date(2019, 10, 5).getTime();
+            const spaces = (endDate - startDate);
+            let timestamp = Math.round(Math.random() * spaces);
+
+            timestamp += startDate;
+
+            return JSON.stringify(new Date(timestamp));
+        }
+
         [...document.querySelectorAll(".p13n-sc-truncated")]
             .forEach((elem, index) => {
                 array.push({
                     id: index,
-                    name: elem.innerText
+                    name: elem.innerText,
+                    date: randomDate()
                 })
             });
 

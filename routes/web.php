@@ -20,3 +20,5 @@ Route::get('/products.js');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/search', 'HomeController@search')->name('search');
