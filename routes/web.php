@@ -11,14 +11,21 @@
 |
 */
 
-Route::get('/', function () {
-    return view('front');
-});
+Route::get('/', 'HomeController@index');
+
+Route::get('/wishlist', 'HomeController@wishlist')->name('wishlist');
+Route::get('/add-to-wishlist/{id}', 'HomeController@addToWishlist');
+Route::get('/delete-from-wishlist/{id}', 'HomeController@deleteFromWishlist');
 
 Route::get('/products.js');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('/search', 'HomeController@search')->name('search');
+
+Route::get('/profile', 'UserController@index')->name('profile');
+Route::post('/profile/edit', 'UserController@edit')->name('profile.edit');
+
+Route::get('/cart', 'OrderController@index')->name('cart');
+Route::get('/add-to-cart/{id}', 'OrderController@addToCart');
+Route::get('/delete-from-cart/{id}', 'OrderController@deleteFromCart');

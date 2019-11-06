@@ -10,7 +10,9 @@ window.Vue = require('vue');
 // window.Vue = require('bootstrap-vue');
 
 import BootstrapVue from 'bootstrap-vue';
+import feather from 'vue-icon';
 
+Vue.use(feather, 'v-icon');
 Vue.use(BootstrapVue);
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -29,6 +31,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 Vue.component('products', require('./components/ProductsComponent.vue').default);
 Vue.component('product', require('./components/ProductComponent.vue').default);
+Vue.component('orders', require('./components/OrdersComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
