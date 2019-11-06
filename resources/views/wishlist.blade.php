@@ -3,9 +3,8 @@
 @section('content')
 
     <div class="container">
-        @include('layouts.search')
         <div class="row">
-            <h1 class="mb-4">Best Sellers in Desktop Computers</h1>
+            <h1 class="mb-4">Wishlist</h1>
         </div>
         <products :products="{{ json_encode($products) }}"></products>
     </div>

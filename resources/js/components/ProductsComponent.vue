@@ -38,8 +38,8 @@
                 </b-form-group>
             </b-col>
         </template>
-        <template v-if="!!products.length">
-            <div class="col-md-4" v-for="(product, index) in products" :key="index">
+        <template v-if="!!filteredProducts.length">
+            <div class="col-md-4" v-for="(product, index) in filteredProducts" :key="index">
                 <product :product="product" />
             </div>
         </template>
@@ -53,7 +53,6 @@
 </template>
 
 <script>
-    import products from '../../../products.json';
     import Datepicker from 'vuejs-datepicker';
 
     export default {
@@ -62,6 +61,9 @@
             Datepicker
         },
         props: {
+            products: {
+                type: Array
+            },
             query: {
                 type: String
             }
@@ -80,7 +82,7 @@
             }
         },
         computed: {
-            products() {
+            filteredProducts() {
                 let searched = [];
 
                 if(this.query !== undefined) {
@@ -90,7 +92,7 @@
                         query = this.query;
                     }
 
-                    searched = products.filter((elem) => {
+                    searched = this.products.filter((elem) => {
                         return elem.name.toLowerCase().includes(query.toLowerCase());
                     });
 
@@ -101,31 +103,28 @@
                     });
 
                     searched = searched.filter((elem) => {
-                        let date = JSON.parse(elem.date);
-
-                        date = new Date(date);
+                        let date = new Date(elem.created_at);
 
                         return date >= this.date.min && date <= this.date.max
                     });
                 } else {
-                    return products
+                    return this.products
                 }
 
                 return searched
             }
         },
         mounted() {
-            this.price.max = Math.max.apply(Math, products.map((elem) => {
+            this.price.max = Math.max.apply(Math, this.products.map((elem) => {
                 const price = elem.price.slice(1).replace(',', '');
                 return parseFloat(price);
             }));
 
-            this.date.min = Math.min.apply(Math, products.map((elem) => {
-                const date = JSON.parse(elem.date);
-                return new Date(date);
+            this.date.min = Math.min.apply(Math, this.products.map((elem) => {
+                return new Date(elem.created_at);
             }));
 
-            this.date.min = new Date(this.date.min);
+            this.date.min = new Date(this.date.min); 
         }
     }
 </script>

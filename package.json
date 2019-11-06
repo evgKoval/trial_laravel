@@ -24,8 +24,10 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@nesk/puphpeteer": "^1.6.0",
         "bootstrap-vue": "^2.0.4",
         "puppeteer": "^2.0.0",
+        "vue-icon": "^2.1.1",
         "vuejs-datepicker": "^1.6.2"
     }
 }

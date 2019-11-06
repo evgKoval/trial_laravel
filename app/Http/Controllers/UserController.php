@@ -20,11 +20,6 @@ class UserController extends Controller
 
     public function edit(Request $request)
     {
-        // if(Auth::user()->email == request('email')) {
-
-        // } else {
-
-        // }
         $this->validate($request, [
             'name' => 'required',
             'email' => [
