@@ -1928,8 +1928,6 @@ __webpack_require__.r(__webpack_exports__);
         return product.id === id;
       });
       this.productForTable.splice(index, 1);
-      console.log(index);
-      console.log(this.productForTable);
       var cart = document.getElementsByClassName('cart')[0].innerText;
       var cartNumber = parseInt(cart.match(/\d/g).join(''), 10);
       cartNumber--;

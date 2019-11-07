@@ -90,8 +90,6 @@
 
               const index = this.productForTable.findIndex(product => product.id === id);
               this.productForTable.splice(index, 1);
-              console.log(index)
-              console.log(this.productForTable);
 
               const cart = document.getElementsByClassName('cart')[0].innerText;
               let cartNumber = parseInt(cart.match(/\d/g).join(''), 10);
