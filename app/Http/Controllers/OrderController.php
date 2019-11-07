@@ -11,7 +11,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = DB::table('orders')->leftJoin('products', 'orders.product_id', '=', 'products.id')->where('orders.user_id', Auth::user()->id)->get();
+        $orders = DB::table('orders')->leftJoin('products', 'orders.product_id', '=', 'products.id')->select('orders.*', 'products.name', 'products.price', 'products.img')->where('orders.user_id', Auth::user()->id)->get();
 
         return view('cart', compact('orders'));
     }
@@ -25,7 +25,7 @@ class OrderController extends Controller
 
     public function deleteFromCart($productId)
     {
-        Order::where('product_id', '=', $productId)->delete();
+        Order::where('id', '=', $productId)->delete();
 
         return redirect()->back();
     }

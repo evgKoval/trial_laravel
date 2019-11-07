@@ -1904,17 +1904,36 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      productForTable: this.products,
       fields: ['name', 'price']
     };
   },
   computed: {
+    productsFiltered: function productsFiltered() {
+      return this.productForTable;
+    },
     amount: function amount() {
       var amount = 0;
-      this.products.forEach(function (elem) {
+      this.productForTable.forEach(function (elem) {
         var price = elem.price.slice(1).replace(',', '');
         amount += parseFloat(price);
       });
       return amount;
+    }
+  },
+  methods: {
+    deleteFromCart: function deleteFromCart(id) {
+      axios.get('/delete-from-cart/' + id);
+      var index = this.productForTable.findIndex(function (product) {
+        return product.id === id;
+      });
+      this.productForTable.splice(index, 1);
+      console.log(index);
+      console.log(this.productForTable);
+      var cart = document.getElementsByClassName('cart')[0].innerText;
+      var cartNumber = parseInt(cart.match(/\d/g).join(''), 10);
+      cartNumber--;
+      document.getElementsByClassName('cart')[0].innerText = cart.replace(cart.match(/\d+/g)[0], cartNumber.toString());
     }
   }
 });
@@ -1975,6 +1994,36 @@ __webpack_require__.r(__webpack_exports__);
   },
   components: {
     customIcon: vue_icon_lib_vue_feather_esm__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      pId: this.product.user_id
+    };
+  },
+  methods: {
+    addToWishlist: function addToWishlist(id) {
+      axios.get('/add-to-wishlist/' + id);
+      this.pId = this.userId;
+      var wishlist = document.getElementsByClassName('wishlist')[0].innerText;
+      var wlNumber = parseInt(wishlist.match(/\d/g).join(''), 10);
+      wlNumber++;
+      document.getElementsByClassName('wishlist')[0].innerText = wishlist.replace(wishlist.match(/\d+/g)[0], wlNumber.toString());
+    },
+    deleteFromWishlist: function deleteFromWishlist(id) {
+      axios.get('/delete-from-wishlist/' + id);
+      this.pId = null;
+      var wishlist = document.getElementsByClassName('wishlist')[0].innerText;
+      var wlNumber = parseInt(wishlist.match(/\d/g).join(''), 10);
+      wlNumber--;
+      document.getElementsByClassName('wishlist')[0].innerText = wishlist.replace(wishlist.match(/\d+/g)[0], wlNumber.toString());
+    },
+    addToCart: function addToCart(id) {
+      axios.get('/add-to-cart/' + id);
+      var cart = document.getElementsByClassName('cart')[0].innerText;
+      var cartNumber = parseInt(cart.match(/\d/g).join(''), 10);
+      cartNumber++;
+      document.getElementsByClassName('cart')[0].innerText = cart.replace(cart.match(/\d+/g)[0], cartNumber.toString());
+    }
   }
 });
 
@@ -67285,7 +67334,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.products, function(product) {
+                _vm._l(_vm.productsFiltered, function(product) {
                   return _c("tr", [
                     _c("td", [
                       _c("img", {
@@ -67300,7 +67349,13 @@ var render = function() {
                     _c("td", [
                       _c(
                         "a",
-                        { attrs: { href: "delete-from-cart/" + product.id } },
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteFromCart(product.id)
+                            }
+                          }
+                        },
                         [
                           _c("custom-icon", {
                             attrs: { name: "x", "base-class": "custom-icon" }
@@ -67432,19 +67487,27 @@ var render = function() {
             "b-button",
             {
               staticClass: "mr-3",
-              attrs: {
-                href: "/add-to-cart/" + _vm.product.id,
-                variant: "warning"
+              attrs: { variant: "warning" },
+              on: {
+                click: function($event) {
+                  return _vm.addToCart(_vm.product.id)
+                }
               }
             },
             [_vm._v("Add to cart")]
           ),
           _vm._v(" "),
-          _vm.userId == _vm.product.user_id
+          _vm.userId == _vm.pId
             ? [
                 _c(
                   "a",
-                  { attrs: { href: "delete-from-wishlist/" + _vm.product.id } },
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.deleteFromWishlist(_vm.product.id)
+                      }
+                    }
+                  },
                   [
                     _c("custom-icon", {
                       attrs: {
@@ -67459,7 +67522,13 @@ var render = function() {
             : [
                 _c(
                   "a",
-                  { attrs: { href: "add-to-wishlist/" + _vm.product.id } },
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.addToWishlist(_vm.product.id)
+                      }
+                    }
+                  },
                   [
                     _c("custom-icon", {
                       attrs: { name: "heart", "base-class": "custom-icon" }

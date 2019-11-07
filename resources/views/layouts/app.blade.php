@@ -49,8 +49,8 @@
                                 </li>
                             @endif
                         @else
-                            <a class="nav-link" href="{{ route('cart') }}">Cart ({{ DB::table('orders')->where('orders.user_id', Auth::user()->id)->count() }})</a>
-                            <a class="nav-link" href="{{ route('wishlist') }}">Wishlist ({{ DB::table('wishlist')->where('wishlist.user_id', Auth::user()->id)->count() }})</a>
+                            <a class="nav-link cart" href="{{ route('cart') }}">Cart ({{ DB::table('orders')->where('orders.user_id', Auth::user()->id)->count() }})</a>
+                            <a class="nav-link wishlist" href="{{ route('wishlist') }}">Wishlist ({{ DB::table('wishlist')->where('wishlist.user_id', Auth::user()->id)->count() }})</a>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
