@@ -15,7 +15,7 @@ class ParseProducts extends Command
      *
      * @var string
      */
-    protected $signature = 'parse:products';
+    protected $signature = 'parse:products {url}';
 
     /**
      * The console command description.
@@ -41,11 +41,21 @@ class ParseProducts extends Command
      */
     public function handle()
     {
+        $url = $this->argument('url');
+
+        $segments = explode('/', $url);
+
+        if(strpos($segments[5], '?')) {
+            $segments[5] = strstr($segments[5], '?', true);
+        }
+
+        $category = $segments[5];
+
         $puppeteer = new Puppeteer;
         $browser = $puppeteer->launch();
 
         $page = $browser->newPage();
-        $page->goto('https://www.amazon.com/Best-Sellers-Computers-Accessories-Desktop/zgbs/pc/565098/');
+        $page->goto($url);
 
         $products = [];
 
@@ -68,7 +78,9 @@ class ParseProducts extends Command
         $browser->close();
 
         foreach ($products as $product) {
-            Product::add($product);
+            Product::add($product, $category);
         }
+
+        $this->info('Products has been upload');
     }
 }
