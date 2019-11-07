@@ -11,14 +11,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="product in products">
+              <tr v-for="product in productsFiltered">
                 <td>
                     <img :src="product.img" :alt="product.name">
                 </td>
                 <td>{{ product.name }}</td>
                 <td>{{ product.price }}</td>
                 <td>
-                    <a :href="'delete-from-cart/' + product.id">
+                    <a @click="deleteFromCart(product.id)">
                         <custom-icon name="x" base-class="custom-icon"></custom-icon>
                     </a> 
                 </td>
@@ -65,20 +65,41 @@
         },
         data() {
             return {
+                productForTable: this.products,
                 fields: ['name', 'price']
             }
         },
         computed: {
+            productsFiltered() {
+                return this.productForTable
+            },
             amount() {
                 let amount = 0;
 
-                this.products.forEach((elem) => {
+                this.productForTable.forEach((elem) => {
                     const price = elem.price.slice(1).replace(',', '');
                     amount += parseFloat(price);
                 });
 
                 return amount
             }
+        },
+        methods: {
+          deleteFromCart(id) {
+              axios.get('/delete-from-cart/' + id);
+
+              const index = this.productForTable.findIndex(product => product.id === id);
+              this.productForTable.splice(index, 1);
+              console.log(index)
+              console.log(this.productForTable);
+
+              const cart = document.getElementsByClassName('cart')[0].innerText;
+              let cartNumber = parseInt(cart.match(/\d/g).join(''), 10);
+              cartNumber--;
+
+              document.getElementsByClassName('cart')[0].innerText = cart.replace(cart.match(/\d+/g)[0], cartNumber.toString());
+
+          }
         }
     }
 </script>
