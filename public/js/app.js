@@ -1979,6 +1979,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'product',
@@ -2037,6 +2039,24 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2118,7 +2138,9 @@ __webpack_require__.r(__webpack_exports__);
       date: {
         min: null,
         max: new Date()
-      }
+      },
+      options: ['all'],
+      selected: 'all'
     };
   },
   computed: {
@@ -2145,6 +2167,9 @@ __webpack_require__.r(__webpack_exports__);
           var date = new Date(elem.created_at);
           return date >= _this.date.min && date <= _this.date.max;
         });
+        searched = searched.filter(function (elem) {
+          return _this.selected == 'all' ? searched : _this.selected == elem.category;
+        });
       } else {
         return this.products;
       }
@@ -2161,6 +2186,12 @@ __webpack_require__.r(__webpack_exports__);
       return new Date(elem.created_at);
     }));
     this.date.min = new Date(this.date.min);
+
+    var unique = _toConsumableArray(new Set(this.products.map(function (elem) {
+      return elem.category;
+    })));
+
+    this.options = this.options.concat(unique);
   }
 });
 
@@ -67473,6 +67504,10 @@ var render = function() {
       }
     },
     [
+      _c("b-badge", { attrs: { variant: "info" } }, [
+        _vm._v(_vm._s(_vm.product.category))
+      ]),
+      _vm._v(" "),
       _c("b-card-text", [
         _vm._v("\n        " + _vm._s(_vm.product.price) + "\n    ")
       ]),
@@ -67564,143 +67599,193 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "row" },
-    [
-      _vm.isSearch
-        ? [
-            _c(
-              "b-col",
-              { staticClass: "mb-4", attrs: { sm: "3" } },
-              [
-                _c(
-                  "b-form-group",
-                  {
-                    attrs: {
-                      label: "Min price",
-                      "label-for": "input-price-min"
-                    }
-                  },
-                  [
-                    _c("b-form-input", {
-                      attrs: { type: "number", id: "input-price-min" },
-                      model: {
-                        value: _vm.price.min,
-                        callback: function($$v) {
-                          _vm.$set(_vm.price, "min", $$v)
-                        },
-                        expression: "price.min"
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "row mb-4" },
+      [
+        _vm.isSearch
+          ? [
+              _c(
+                "b-col",
+                { staticClass: "mb-2", attrs: { sm: "3" } },
+                [
+                  _c(
+                    "b-form-group",
+                    {
+                      attrs: {
+                        label: "Min price",
+                        "label-for": "input-price-min"
                       }
-                    })
-                  ],
-                  1
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "b-col",
-              { staticClass: "mb-4", attrs: { sm: "3" } },
-              [
-                _c(
-                  "b-form-group",
-                  {
-                    attrs: {
-                      label: "Max price",
-                      "label-for": "input-price-max"
-                    }
-                  },
-                  [
-                    _c("b-form-input", {
-                      attrs: { type: "number", id: "input-price-max" },
-                      model: {
-                        value: _vm.price.max,
-                        callback: function($$v) {
-                          _vm.$set(_vm.price, "max", $$v)
-                        },
-                        expression: "price.max"
+                    },
+                    [
+                      _c("b-form-input", {
+                        attrs: { type: "number", id: "input-price-min" },
+                        model: {
+                          value: _vm.price.min,
+                          callback: function($$v) {
+                            _vm.$set(_vm.price, "min", $$v)
+                          },
+                          expression: "price.min"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-col",
+                { staticClass: "mb-2", attrs: { sm: "3" } },
+                [
+                  _c(
+                    "b-form-group",
+                    {
+                      attrs: {
+                        label: "Max price",
+                        "label-for": "input-price-max"
                       }
-                    })
-                  ],
-                  1
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "b-col",
-              { attrs: { sm: "3" } },
-              [
-                _c(
-                  "b-form-group",
-                  {
-                    attrs: { label: "Min date", "label-for": "input-date-min" }
-                  },
-                  [
-                    _c("datepicker", {
-                      attrs: { id: "input-date-min", "bootstrap-styling": "" },
-                      model: {
-                        value: _vm.date.min,
-                        callback: function($$v) {
-                          _vm.$set(_vm.date, "min", $$v)
-                        },
-                        expression: "date.min"
+                    },
+                    [
+                      _c("b-form-input", {
+                        attrs: { type: "number", id: "input-price-max" },
+                        model: {
+                          value: _vm.price.max,
+                          callback: function($$v) {
+                            _vm.$set(_vm.price, "max", $$v)
+                          },
+                          expression: "price.max"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-col",
+                { attrs: { sm: "3" } },
+                [
+                  _c(
+                    "b-form-group",
+                    {
+                      attrs: {
+                        label: "Min date",
+                        "label-for": "input-date-min"
                       }
-                    })
-                  ],
-                  1
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "b-col",
-              { attrs: { sm: "3" } },
-              [
-                _c(
-                  "b-form-group",
-                  {
-                    attrs: { label: "Max date", "label-for": "input-date-max" }
-                  },
-                  [
-                    _c("datepicker", {
-                      attrs: { id: "input-date-max", "bootstrap-styling": "" },
-                      model: {
-                        value: _vm.date.max,
-                        callback: function($$v) {
-                          _vm.$set(_vm.date, "max", $$v)
+                    },
+                    [
+                      _c("datepicker", {
+                        attrs: {
+                          id: "input-date-min",
+                          "bootstrap-styling": ""
                         },
-                        expression: "date.max"
+                        model: {
+                          value: _vm.date.min,
+                          callback: function($$v) {
+                            _vm.$set(_vm.date, "min", $$v)
+                          },
+                          expression: "date.min"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-col",
+                { attrs: { sm: "3" } },
+                [
+                  _c(
+                    "b-form-group",
+                    {
+                      attrs: {
+                        label: "Max date",
+                        "label-for": "input-date-max"
                       }
-                    })
-                  ],
-                  1
-                )
-              ],
-              1
-            )
-          ]
-        : _vm._e(),
-      _vm._v(" "),
-      !!_vm.filteredProducts.length
-        ? _vm._l(_vm.filteredProducts, function(product, index) {
-            return _c(
-              "div",
-              { key: index, staticClass: "col-md-4" },
-              [
-                _c("product", { attrs: { product: product, userId: _vm.user } })
-              ],
-              1
-            )
-          })
-        : [_vm._m(0)]
-    ],
-    2
-  )
+                    },
+                    [
+                      _c("datepicker", {
+                        attrs: {
+                          id: "input-date-max",
+                          "bootstrap-styling": ""
+                        },
+                        model: {
+                          value: _vm.date.max,
+                          callback: function($$v) {
+                            _vm.$set(_vm.date, "max", $$v)
+                          },
+                          expression: "date.max"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-col",
+                { attrs: { sm: "3" } },
+                [
+                  _c(
+                    "b-form-group",
+                    {
+                      attrs: { label: "Sort by", "label-for": "input-date-max" }
+                    },
+                    [
+                      _c("b-form-select", {
+                        attrs: { options: _vm.options },
+                        model: {
+                          value: _vm.selected,
+                          callback: function($$v) {
+                            _vm.selected = $$v
+                          },
+                          expression: "selected"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ]
+          : _vm._e()
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row" },
+      [
+        !!_vm.filteredProducts.length
+          ? _vm._l(_vm.filteredProducts, function(product, index) {
+              return _c(
+                "div",
+                { key: index, staticClass: "col-md-4" },
+                [
+                  _c("product", {
+                    attrs: { product: product, userId: _vm.user }
+                  })
+                ],
+                1
+              )
+            })
+          : [_vm._m(0)]
+      ],
+      2
+    )
+  ])
 }
 var staticRenderFns = [
   function() {

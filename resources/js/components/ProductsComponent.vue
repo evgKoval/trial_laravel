@@ -1,54 +1,64 @@
 <template>
-    <div class="row">
-        <template v-if="isSearch">
-            <b-col sm="3" class="mb-4">
-                <b-form-group
-                    label="Min price"
-                    label-for="input-price-min">
-                    <b-form-input
-                        type="number"
-                        id="input-price-min"
-                        v-model="price.min">
-                    </b-form-input>
-                </b-form-group>
-            </b-col>
-            <b-col sm="3" class="mb-4">
-                <b-form-group
-                    label="Max price"
-                    label-for="input-price-max">
-                    <b-form-input
-                        type="number"
-                        id="input-price-max"
-                        v-model="price.max">
-                    </b-form-input>
-                </b-form-group>
-            </b-col> 
-            <b-col sm="3">
-                <b-form-group
-                    label="Min date"
-                    label-for="input-date-min">
-                    <datepicker v-model="date.min" id="input-date-min" bootstrap-styling></datepicker>
-                </b-form-group>
-            </b-col>
-            <b-col sm="3">
-                <b-form-group
-                    label="Max date"
-                    label-for="input-date-max">
-                    <datepicker v-model="date.max" id="input-date-max" bootstrap-styling></datepicker>
-                </b-form-group>
-            </b-col>
-        </template>
-        <template v-if="!!filteredProducts.length">
-            <div class="col-md-4" v-for="(product, index) in filteredProducts" :key="index">
-                <product :product="product" :userId="user" />
-            </div>
-        </template>
-        <template v-else>
-            <div class="col-12">
-                <h5>There are no products</h5>
-            </div>
-        </template>
-        
+    <div>
+        <div class="row mb-4">
+            <template v-if="isSearch">
+                    <b-col sm="3" class="mb-2">
+                        <b-form-group
+                            label="Min price"
+                            label-for="input-price-min">
+                            <b-form-input
+                                type="number"
+                                id="input-price-min"
+                                v-model="price.min">
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+                    <b-col sm="3" class="mb-2">
+                        <b-form-group
+                            label="Max price"
+                            label-for="input-price-max">
+                            <b-form-input
+                                type="number"
+                                id="input-price-max"
+                                v-model="price.max">
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col> 
+                    <b-col sm="3">
+                        <b-form-group
+                            label="Min date"
+                            label-for="input-date-min">
+                            <datepicker v-model="date.min" id="input-date-min" bootstrap-styling></datepicker>
+                        </b-form-group>
+                    </b-col>
+                    <b-col sm="3">
+                        <b-form-group
+                            label="Max date"
+                            label-for="input-date-max">
+                            <datepicker v-model="date.max" id="input-date-max" bootstrap-styling></datepicker>
+                        </b-form-group>
+                    </b-col>
+                    <b-col sm="3">
+                        <b-form-group
+                            label="Sort by"
+                            label-for="input-date-max">
+                            <b-form-select v-model="selected" :options="options"></b-form-select>
+                        </b-form-group>
+                    </b-col>
+            </template>
+        </div>
+        <div class="row">
+            <template v-if="!!filteredProducts.length">
+                <div class="col-md-4" v-for="(product, index) in filteredProducts" :key="index">
+                    <product :product="product" :userId="user" />
+                </div>
+            </template>
+            <template v-else>
+                <div class="col-12">
+                    <h5>There are no products</h5>
+                </div>
+            </template>
+        </div>
     </div>
 </template>
 
@@ -81,7 +91,9 @@
                 date: {
                     min: null,
                     max: new Date()
-                }
+                },
+                options: ['all'],
+                selected: 'all'
             }
         },
         computed: {
@@ -110,6 +122,10 @@
 
                         return date >= this.date.min && date <= this.date.max
                     });
+
+                    searched = searched.filter((elem) => {
+                        return this.selected == 'all' ? searched : this.selected == elem.category
+                    });
                 } else {
                     return this.products
                 }
@@ -128,6 +144,10 @@
             }));
 
             this.date.min = new Date(this.date.min); 
+
+            const unique = [...new Set(this.products.map(elem => elem.category))];
+
+            this.options = this.options.concat(unique);
         }
     }
 </script>

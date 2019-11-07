@@ -5,7 +5,7 @@
     <div class="container">
         @include('layouts.search')
         <div class="row">
-            <h1 class="mb-4">Best Sellers in Desktop Computers</h1>
+            <h1 class="mb-4">Best Sellers from Amazon</h1>
         </div>
         <products :products="{{ json_encode($products) }}" :user="{{ json_encode($userId) }}"></products>
     </div>
