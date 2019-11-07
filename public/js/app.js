@@ -1885,6 +1885,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'orders',
@@ -1962,6 +1968,9 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     product: {
       type: Object
+    },
+    userId: {
+      type: Number
     }
   },
   components: {
@@ -2044,6 +2053,9 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     products: {
       type: Array
+    },
+    user: {
+      type: Number
     },
     query: {
       type: String
@@ -67263,84 +67275,98 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("table", { staticClass: "table" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.products, function(product) {
-          return _c("tr", [
-            _c("td", [
-              _c("img", { attrs: { src: product.img, alt: product.name } })
+  return _c(
+    "div",
+    [
+      !!_vm.products.length
+        ? [
+            _c("table", { staticClass: "table" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.products, function(product) {
+                  return _c("tr", [
+                    _c("td", [
+                      _c("img", {
+                        attrs: { src: product.img, alt: product.name }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(product.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(product.price))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        { attrs: { href: "delete-from-cart/" + product.id } },
+                        [
+                          _c("custom-icon", {
+                            attrs: { name: "x", "base-class": "custom-icon" }
+                          })
+                        ],
+                        1
+                      )
+                    ])
+                  ])
+                }),
+                0
+              )
             ]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(product.name))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(product.price))]),
-            _vm._v(" "),
-            _c("td", [
-              _c(
-                "a",
-                { attrs: { href: "delete-from-cart/" + product.id } },
-                [
-                  _c("custom-icon", {
-                    attrs: { name: "x", "base-class": "custom-icon" }
-                  })
-                ],
-                1
-              )
-            ])
-          ])
-        }),
-        0
-      )
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "row" },
-      [
-        _c("b-col", { attrs: { sm: "10" } }, [_c("h3", [_vm._v("Total")])]),
-        _vm._v(" "),
-        _c("b-col", { staticClass: "text-right", attrs: { sm: "2" } }, [
-          _c("h3", [_vm._v("$" + _vm._s(_vm.amount))])
-        ])
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "row mt-5" },
-      [
-        _c(
-          "b-col",
-          { attrs: { sm: "6" } },
-          [
-            _c("b-button", { attrs: { href: "/", variant: "secondary" } }, [
-              _vm._v("Back to shoping")
-            ])
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "b-col",
-          { staticClass: "text-right", attrs: { sm: "6" } },
-          [
             _c(
-              "b-button",
-              { attrs: { href: "/checkout", variant: "success" } },
-              [_vm._v("Proceed to checkout")]
+              "div",
+              { staticClass: "row" },
+              [
+                _c("b-col", { attrs: { sm: "10" } }, [
+                  _c("h3", [_vm._v("Total")])
+                ]),
+                _vm._v(" "),
+                _c("b-col", { staticClass: "text-right", attrs: { sm: "2" } }, [
+                  _c("h3", [_vm._v("$" + _vm._s(_vm.amount))])
+                ])
+              ],
+              1
             )
-          ],
-          1
-        )
-      ],
-      1
-    )
-  ])
+          ]
+        : [_c("h5", [_vm._v("Your cart is empty")])],
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "row mt-5" },
+        [
+          _c(
+            "b-col",
+            { attrs: { sm: "6" } },
+            [
+              _c("b-button", { attrs: { href: "/", variant: "secondary" } }, [
+                _vm._v("Back to shoping")
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "b-col",
+            { staticClass: "text-right", attrs: { sm: "6" } },
+            [
+              !!_vm.products.length
+                ? _c(
+                    "b-button",
+                    { attrs: { href: "/checkout", variant: "success" } },
+                    [_vm._v("Proceed to checkout")]
+                  )
+                : _vm._e()
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    2
+  )
 }
 var staticRenderFns = [
   function() {
@@ -67414,7 +67440,7 @@ var render = function() {
             [_vm._v("Add to cart")]
           ),
           _vm._v(" "),
-          _vm.product.product_id
+          _vm.userId == _vm.product.user_id
             ? [
                 _c(
                   "a",
@@ -67598,7 +67624,9 @@ var render = function() {
             return _c(
               "div",
               { key: index, staticClass: "col-md-4" },
-              [_c("product", { attrs: { product: product } })],
+              [
+                _c("product", { attrs: { product: product, userId: _vm.user } })
+              ],
               1
             )
           })

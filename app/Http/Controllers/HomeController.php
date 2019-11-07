@@ -7,9 +7,6 @@ use Auth;
 use App\Product;
 use App\Wishlist;
 use Illuminate\Http\Request;
-use Nesk\Puphpeteer\Puppeteer;
-// use Nesk\Rialto\Data\JsFunction;
-use Nesk\Puphpeteer\Resources\ElementHandle;
 
 class HomeController extends Controller
 {
@@ -30,31 +27,41 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products = DB::table('products')
-            ->leftJoin('wishlist', 'products.id', '=', 'wishlist.product_id')
-            // ->where('wishlist.user_id', Auth::user()->id)
-            ->select('products.*', 'wishlist.product_id')
-            ->get();
+        $userId = Auth::user()->id;
 
-        return view('front', compact('products'));
+        $products = Product::all();
+
+        $wishlist = Wishlist::where('user_id', '=', $userId)->get();
+
+        foreach ($products as $product) {
+            $find = $wishlist->where('product_id', $product['id'])->first();
+
+            $product['user_id'] = isset($find) ? $find->user_id : null;
+        }
+
+        return view('front', compact('products', 'userId'));
     }
 
     public function search(Request $request)
     {
+        $userId = Auth::user()->id;
+
         $products = DB::table('products')
             ->leftJoin('wishlist', 'products.id', '=', 'wishlist.product_id')
             ->select('products.*', 'wishlist.product_id')
             ->get();
         $query = $request->input('query');
 
-        return view('search', compact('query', 'products'));
+        return view('search', compact('query', 'products', 'userId'));
     }
 
     public function wishlist()
     {
+        $userId = Auth::user()->id;
+
         $products = DB::table('wishlist')->leftJoin('products', 'wishlist.product_id', '=', 'products.id')->where('wishlist.user_id', Auth::user()->id)->get();
 
-        return view('wishlist', compact('products'));
+        return view('wishlist', compact('products', 'userId'));
     }
 
     public function addToWishlist($productId)

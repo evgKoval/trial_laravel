@@ -13,7 +13,7 @@
 
         <div class="d-flex align-items-center">
             <b-button :href="'/add-to-cart/' + product.id" variant="warning" class="mr-3">Add to cart</b-button>
-            <template v-if="product.product_id">
+            <template v-if="userId == product.user_id">
                 <a :href="'delete-from-wishlist/' + product.id">
                     <custom-icon name="heart" base-class="custom-icon icon-active"></custom-icon>
                 </a> 
@@ -37,6 +37,9 @@
         props: {
             product: {
                 type: Object
+            },
+            userId: {
+               type: Number 
             }
         },
         components: {
