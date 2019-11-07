@@ -7,6 +7,8 @@
         tag="article"
         class="mb-4"
     >
+        <b-badge variant="info">{{ product.category }}</b-badge>
+
         <b-card-text>
             {{ product.price }}
         </b-card-text>
