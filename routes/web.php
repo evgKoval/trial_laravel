@@ -11,13 +11,11 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('/');
 
 Route::get('/wishlist', 'HomeController@wishlist')->name('wishlist');
 Route::get('/add-to-wishlist/{id}', 'HomeController@addToWishlist');
 Route::get('/delete-from-wishlist/{id}', 'HomeController@deleteFromWishlist');
-
-Route::get('/products.js');
 
 Auth::routes();
 
@@ -29,3 +27,7 @@ Route::post('/profile/edit', 'UserController@edit')->name('profile.edit');
 Route::get('/cart', 'OrderController@index')->name('cart');
 Route::get('/add-to-cart/{id}', 'OrderController@addToCart');
 Route::get('/delete-from-cart/{id}', 'OrderController@deleteFromCart');
+
+Route::get('/checkout', 'PaymentController@index');
+Route::post('paypal', 'PaymentController@payWithpaypal')->name('paypal');
+Route::get('status', 'PaymentController@getPaymentStatus')->name('status');

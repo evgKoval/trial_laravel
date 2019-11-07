@@ -40,7 +40,7 @@
         </template>
         <template v-if="!!filteredProducts.length">
             <div class="col-md-4" v-for="(product, index) in filteredProducts" :key="index">
-                <product :product="product" />
+                <product :product="product" :userId="user" />
             </div>
         </template>
         <template v-else>
@@ -63,6 +63,9 @@
         props: {
             products: {
                 type: Array
+            },
+            user: {
+                type: Number
             },
             query: {
                 type: String
