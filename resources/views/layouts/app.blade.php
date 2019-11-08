@@ -49,6 +49,9 @@
                                 </li>
                             @endif
                         @else
+                            @if (Auth::user()->is_admin)
+                                <a class="nav-link" href="{{ route('admin') }}">Admin</a>
+                            @endif
                             <a class="nav-link cart" href="{{ route('cart') }}">Cart ({{ DB::table('orders')->where('orders.user_id', Auth::user()->id)->count() }})</a>
                             <a class="nav-link wishlist" href="{{ route('wishlist') }}">Wishlist ({{ DB::table('wishlist')->where('wishlist.user_id', Auth::user()->id)->count() }})</a>
                             <li class="nav-item dropdown">

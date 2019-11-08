@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
+use App\Models\Order;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -11,7 +11,10 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = DB::table('orders')->leftJoin('products', 'orders.product_id', '=', 'products.id')->select('orders.*', 'products.name', 'products.price', 'products.img')->where('orders.user_id', Auth::user()->id)->get();
+        $orders = Order::leftJoin('products', 'orders.product_id', '=', 'products.id')
+            ->select('orders.*', 'products.name', 'products.price', 'products.img')
+            ->where('orders.user_id', Auth::user()->id)
+            ->get();
 
         return view('cart', compact('orders'));
     }

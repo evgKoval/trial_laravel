@@ -45,6 +45,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 Vue.component('products', require('./components/ProductsComponent.vue').default);
 Vue.component('product', require('./components/ProductComponent.vue').default);
 Vue.component('orders', require('./components/OrdersComponent.vue').default);
+Vue.component('admin-products', require('./components/AdminProductsComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

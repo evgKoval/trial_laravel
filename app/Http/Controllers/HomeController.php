@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
-use App\Product;
-use App\Wishlist;
+use App\Models\Product;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -48,8 +48,7 @@ class HomeController extends Controller
     {
         $userId = Auth::user()->id;
 
-        $products = DB::table('products')
-            ->leftJoin('wishlist', 'products.id', '=', 'wishlist.product_id')
+        $products = Product::leftJoin('wishlist', 'products.id', '=', 'wishlist.product_id')
             ->select('products.*', 'wishlist.product_id')
             ->get();
         $query = $request->input('query');
@@ -61,7 +60,7 @@ class HomeController extends Controller
     {
         $userId = Auth::user()->id;
 
-        $products = DB::table('wishlist')->leftJoin('products', 'wishlist.product_id', '=', 'products.id')->where('wishlist.user_id', Auth::user()->id)->get();
+        $products = Wishlist::leftJoin('products', 'wishlist.product_id', '=', 'products.id')->where('wishlist.user_id', Auth::user()->id)->get();
 
         return view('wishlist', compact('products', 'userId'));
     }

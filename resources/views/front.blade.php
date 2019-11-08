@@ -3,6 +3,11 @@
 @section('content')
 
     <div class="container">
+        @if ($message = Session::get('error'))
+            <b-alert show variant="danger">{!! $message !!}</b-alert>
+            <?php Session::forget('error');?>
+        @endif
+        
         @include('layouts.menu')
         @include('layouts.search')
         <div class="row">
