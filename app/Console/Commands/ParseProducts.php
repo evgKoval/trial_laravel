@@ -43,44 +43,66 @@ class ParseProducts extends Command
     {
         $url = $this->argument('url');
 
-        $segments = explode('/', $url);
-
-        if(strpos($segments[5], '?')) {
-            $segments[5] = strstr($segments[5], '?', true);
-        }
-
-        $category = $segments[5];
-
         $puppeteer = new Puppeteer;
         $browser = $puppeteer->launch();
 
         $page = $browser->newPage();
         $page->goto($url);
 
-        $products = [];
+        $parsedCategories = $page->querySelectorAll('#zg_browseRoot ul ul li a');
 
-        $names = $page->querySelectorAll('.p13n-sc-truncated'); 
-        $prices = $page->querySelectorAll('.p13n-sc-price'); 
-        $images = $page->querySelectorAll('.a-section.a-spacing-small img'); 
+        $links = [];
+        $categories = [];
 
-        foreach($names as $name) {
-            $products[]['name'] = $name->getProperty('innerText')->jsonValue();
+        $j = 0;
+
+        foreach ($parsedCategories as $category) {
+            $categories[] = $category->getProperty('innerText')->jsonValue();
+            $links[] = $category->getProperty('href')->jsonValue();
+
+            if (++$j == 5) break;
         }
 
-        for ($i = 0; $i < count($products); $i++) {
-            $products[$i]['price'] = $prices[$i]->getProperty('innerText')->jsonValue();
+        foreach ($links as $key => $link) {
+            $puppeteer = new Puppeteer;
+            $browser = $puppeteer->launch();
+
+            $page = $browser->newPage();
+            $page->goto($link);
+
+            $products = [];
+
+            $names = $page->querySelectorAll('.p13n-sc-truncated'); 
+            $prices = $page->querySelectorAll('.p13n-sc-price'); 
+            $images = $page->querySelectorAll('.a-section.a-spacing-small img'); 
+
+            foreach($names as $name) {
+                $products[]['name'] = $name->getProperty('innerText')->jsonValue();
+            }
+
+            for ($i = 0; $i < count($prices); $i++) {
+                $products[$i]['price'] = $prices[$i]->getProperty('innerText')->jsonValue();
+            }
+
+            for ($i = 0; $i < count($images); $i++) {
+                $products[$i]['img'] = $images[$i]->getProperty('src')->jsonValue();
+            }
+
+            $browser->close();
+
+            if(count($products) >= 6) {
+                for ($i = 0; $i < 6; $i++) {
+                    Product::add($products[$i], $categories[$key]);
+                }
+            } else {
+                for ($i = 0; count($products); $i++) {
+                    Product::add($products[$i], $categories[$key]);
+                }
+            }
+
+            $this->info("Products from $categories[$key] has been upload");
         }
 
-        for ($i = 0; $i < count($images); $i++) {
-            $products[$i]['img'] = $images[$i]->getProperty('src')->jsonValue();
-        }
-
-        $browser->close();
-
-        foreach ($products as $product) {
-            Product::add($product, $category);
-        }
-
-        $this->info('Products has been upload');
+        $this->info('Parse Done!');
     }
 }
