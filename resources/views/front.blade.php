@@ -8,6 +8,7 @@
             <h1 class="mb-4">Best Sellers from Amazon</h1>
         </div>
         <products :products="{{ json_encode($products) }}" :user="{{ json_encode($userId) }}"></products>
+
     </div>
 
 @endsection

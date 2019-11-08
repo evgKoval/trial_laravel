@@ -11,7 +11,20 @@ window.Vue = require('vue');
 
 import BootstrapVue from 'bootstrap-vue';
 import feather from 'vue-icon';
+var SocialSharing = require('vue-social-sharing');
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons';
+import { faTwitterSquare } from '@fortawesome/free-brands-svg-icons';
+import { faTelegram } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
+library.add(faFacebookSquare);
+library.add(faTwitterSquare);
+library.add(faTelegram);
+
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+
+Vue.use(SocialSharing);
 Vue.use(feather, 'v-icon');
 Vue.use(BootstrapVue);
 
