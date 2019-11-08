@@ -36,3 +36,5 @@ Route::get('/delete-from-cart/{id}', 'OrderController@deleteFromCart');
 Route::get('/checkout', 'PaymentController@index');
 Route::post('paypal', 'PaymentController@payWithpaypal')->name('paypal');
 Route::get('status', 'PaymentController@getPaymentStatus')->name('status');
+
+Route::get('/admin', 'AdminController@index')->middleware('admin')->name('admin');
