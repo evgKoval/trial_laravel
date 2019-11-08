@@ -24,10 +24,16 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.25",
+        "@fortawesome/free-brands-svg-icons": "^5.11.2",
+        "@fortawesome/free-regular-svg-icons": "^5.11.2",
+        "@fortawesome/free-solid-svg-icons": "^5.11.2",
+        "@fortawesome/vue-fontawesome": "^0.1.8",
         "@nesk/puphpeteer": "^1.6.0",
         "bootstrap-vue": "^2.0.4",
         "puppeteer": "^2.0.0",
         "vue-icon": "^2.1.1",
+        "vue-social-sharing": "^2.4.6",
         "vuejs-datepicker": "^1.6.2"
     }
 }

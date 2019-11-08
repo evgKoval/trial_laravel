@@ -26,7 +26,25 @@
                 </a>
             </template>
         </div>
-            
+
+         <social-sharing url="https://trial-laravel.app/"
+                         :title="product.name"
+                         :quote="product.title"
+                         :hashtags="product.category"
+                          inline-template
+                          class="mt-3">
+            <div>
+                <network network="facebook">
+                    <font-awesome-icon :icon="['fab', 'facebook-square']" class="" />
+                </network>
+                <network network="telegram">
+                    <font-awesome-icon :icon="['fab', 'telegram']" />
+                </network>
+                <network network="twitter">
+                    <font-awesome-icon :icon="['fab', 'twitter-square']" />
+                </network>
+            </div>
+        </social-sharing>
 
     </b-card>
 </template>
@@ -102,5 +120,22 @@
     .icon-active {
         fill: red;
         stroke: red;
+    }
+
+    .fa-facebook-square {
+        color: #4267B2;
+        font-size: 27px;
+        margin-right: 0.5rem;
+    }
+
+    .fa-telegram {
+        color: #0088cc;
+        font-size: 27px;
+        margin-right: 0.5rem;
+    }
+
+    .fa-twitter-square {
+        color: #55ACEE;
+        font-size: 27px;
     }
 </style>
