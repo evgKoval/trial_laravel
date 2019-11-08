@@ -19,6 +19,9 @@ Route::get('/delete-from-wishlist/{id}', 'HomeController@deleteFromWishlist');
 
 Auth::routes();
 
+Route::get('/redirect', 'SocialAuthGoogleController@redirect');
+Route::get('/callback', 'SocialAuthGoogleController@callback');
+
 Route::get('/search', 'HomeController@search')->name('search');
 
 Route::get('/profile', 'UserController@index')->name('profile');
