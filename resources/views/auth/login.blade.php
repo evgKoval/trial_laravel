@@ -57,11 +57,16 @@
                                     {{ __('Login') }}
                                 </button>
 
+
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+
+                                <div class="mt-3">
+                                    <a href="{{ url('/redirect') }}" class="btn btn-success">Login With Google</a>
+                                </div>
                             </div>
                         </div>
                     </form>

@@ -30,4 +30,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'client_id' => '184979358092-cd0oj6c2l8i4euh4uv1ahlblrh9jtgu3.apps.googleusercontent.com',
+        'client_secret' => 'fP_B2rUCr77H-Ed17SXHRqF0',
+        'redirect' => 'https://trial-laravel.app/callback'
+    ],
+
 ];
