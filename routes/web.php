@@ -24,6 +24,8 @@ Route::get('/callback', 'SocialAuthGoogleController@callback');
 
 Route::get('/search', 'HomeController@search')->name('search');
 
+Route::get('/category/{category}', 'CategoryController@index');
+
 Route::get('/profile', 'UserController@index')->name('profile');
 Route::post('/profile/edit', 'UserController@edit')->name('profile.edit');
 
