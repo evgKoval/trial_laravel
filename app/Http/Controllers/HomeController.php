@@ -29,6 +29,8 @@ class HomeController extends Controller
     {
         $userId = Auth::user()->id;
 
+        $categories = Product::select('category')->groupBy('category')->get()->toArray();
+
         $products = Product::all();
 
         $wishlist = Wishlist::where('user_id', '=', $userId)->get();
@@ -39,7 +41,7 @@ class HomeController extends Controller
             $product['user_id'] = isset($find) ? $find->user_id : null;
         }
 
-        return view('front', compact('products', 'userId'));
+        return view('front', compact('products', 'userId', 'categories'));
     }
 
     public function search(Request $request)
