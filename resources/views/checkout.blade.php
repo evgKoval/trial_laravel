@@ -5,34 +5,99 @@
         <div class="row">
             <b-col sm="12">
                 <h1 class="mb-4">Payment Form</h1>
-                @if ($message = Session::get('success'))
-                    <div class="w3-panel w3-green w3-display-container">
-                        <span onclick="this.parentElement.style.display='none'"
-                                class="w3-button w3-green w3-large w3-display-topright">&times;</span>
-                        <p>{!! $message !!}</p>
-                    </div>
-                    <?php Session::forget('success');?>
-                @endif
-
-                @if ($message = Session::get('error'))
-                    <div class="w3-panel w3-red w3-display-container">
-                        <span onclick="this.parentElement.style.display='none'"
-                                class="w3-button w3-red w3-large w3-display-topright">&times;</span>
-                        <p>{!! $message !!}</p>
-                    </div>
-                    <?php Session::forget('error');?>
-                @endif
-
                 <b-form method="POST" id="payment-form" action="{{ route('paypal') }}">
                     {{ csrf_field() }}
                     <b-form-group
-                        label="Enter amount:"
+                        label="Your name"
+                        label-for="input-name"
+                    >
+                        <b-form-input
+                            name="name"
+                            id="input-name"
+                            value="{{ $user->name }}"
+                        ></b-form-input>
+                    </b-form-group>
+
+                    <b-form-group
+                        label="Your email"
+                        label-for="input-email"
+                    >
+                        <b-form-input
+                            name="email"
+                            id="input-email"
+                            value="{{ $user->email }}"
+                        ></b-form-input>
+                    </b-form-group>
+
+                    <div class="row">
+                        <b-col col="3">
+                            <b-form-group
+                                label="Your country"
+                                label-for="input-country"
+                            >
+                                <b-form-input
+                                    name="country"
+                                    id="input-country"
+                                    value="{{ old('country') }}"
+                                ></b-form-input>
+                            </b-form-group>
+                        </b-col>
+                        <b-col col="3">
+                            <b-form-group
+                                label="State code"
+                                label-for="input-code"
+                            >
+                                <b-form-input
+                                    name="code"
+                                    id="input-code"
+                                    value="{{ old('code') }}"
+                                ></b-form-input>
+                            </b-form-group>
+                        </b-col>
+                        <b-form-group
+                            label="Your city"
+                            label-for="input-city"
+                        >
+                            <b-form-input
+                                name="city"
+                                id="input-city"
+                                value="{{ old('city') }}"
+                            ></b-form-input>
+                        </b-form-group>
+                        <b-col col="3">
+                            <b-form-group
+                                label="ZIP"
+                                label-for="input-zip"
+                            >
+                                <b-form-input
+                                    name="zip"
+                                    id="input-zip"
+                                    value="{{ old('zip') }}"
+                                ></b-form-input>
+                            </b-form-group>
+                        </b-col>
+                    </div>
+
+                    <b-form-group
+                        label="Your adress"
+                        label-for="input-adress"
+                    >
+                        <b-form-input
+                            name="adress"
+                            id="input-adress"
+                            value="{{ old('adress') }}"
+                        ></b-form-input>
+                    </b-form-group>
+
+                    <b-form-group
+                        label="Amount"
                         label-for="input-pay"
                     >
                         <b-form-input
+                            readonly
                             name="amount"
                             id="input-pay"
-                            value="{{ $amount }}"
+                            value="${{ $amount }}"
                         ></b-form-input>
                     </b-form-group>
 

@@ -8,7 +8,7 @@ class MadeOrders extends Model
 {
     protected $table = 'made_orders';
     protected $primaryKey = 'id';
-    protected $fillable = ['name', 'email', 'country', 'state_province', 'city', 'zip', 'adress', 'phone', 'paid'];
+    protected $fillable = ['user_id', 'name', 'email', 'country', 'state_province', 'city', 'zip', 'adress', 'phone', 'paid'];
 
     public static function add($fields) 
     {
