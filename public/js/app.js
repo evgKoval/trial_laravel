@@ -7892,6 +7892,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'orders',
   props: {
@@ -7910,7 +7911,16 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    "delete": function _delete(id) {//
+    deleteProduct: function deleteProduct(id) {
+      var _this = this;
+
+      axios["delete"]('/admin/' + id).then(function () {
+        var index = _this.productForTable.findIndex(function (product) {
+          return product.id === id;
+        });
+
+        _this.productForTable.splice(index, 1);
+      });
     }
   }
 });
@@ -8003,8 +8013,7 @@ __webpack_require__.r(__webpack_exports__);
     amount: function amount() {
       var amount = 0;
       this.productForTable.forEach(function (elem) {
-        var price = elem.price.slice(1).replace(',', '');
-        amount += parseFloat(price);
+        amount += parseFloat(elem.price);
       });
       return amount;
     }
@@ -8266,8 +8275,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
           return elem.name.toLowerCase().includes(query.toLowerCase());
         });
         searched = searched.filter(function (elem) {
-          var price = elem.price.slice(1).replace(',', '');
-          return parseFloat(price) >= _this.price.min && parseFloat(price) <= _this.price.max;
+          return elem.price >= _this.price.min && elem.price <= _this.price.max;
         });
         searched = searched.filter(function (elem) {
           var date = new Date(elem.created_at);
@@ -8285,8 +8293,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   },
   mounted: function mounted() {
     this.price.max = Math.max.apply(Math, this.products.map(function (elem) {
-      var price = elem.price.slice(1).replace(',', '');
-      return parseFloat(price);
+      return parseFloat(elem.price);
     }));
     this.date.min = Math.min.apply(Math, this.products.map(function (elem) {
       return new Date(elem.created_at);
@@ -73519,6 +73526,19 @@ var render = function() {
             "b-tab",
             { attrs: { title: "Products", active: "" } },
             [
+              _c(
+                "b-button",
+                {
+                  staticClass: "mb-4 mt-4",
+                  attrs: {
+                    href: "/admin/product-add/",
+                    variant: "primary",
+                    block: ""
+                  }
+                },
+                [_vm._v("Add a product")]
+              ),
+              _vm._v(" "),
               !!_vm.products.length
                 ? [
                     _c("table", { staticClass: "table" }, [
@@ -73545,18 +73565,20 @@ var render = function() {
                         _vm._l(_vm.productsFiltered, function(product) {
                           return _c("tr", [
                             _c("td", [
-                              _c("img", {
-                                attrs: {
-                                  src: product.img,
-                                  alt: product.name,
-                                  width: "50%"
-                                }
-                              })
+                              product.img != 0
+                                ? _c("img", {
+                                    attrs: {
+                                      src: product.img,
+                                      alt: product.name,
+                                      width: "50%"
+                                    }
+                                  })
+                                : _vm._e()
                             ]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(product.name))]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(product.price))]),
+                            _c("td", [_vm._v("$" + _vm._s(product.price))]),
                             _vm._v(" "),
                             _c(
                               "td",
@@ -73565,14 +73587,24 @@ var render = function() {
                                   "b-button",
                                   {
                                     staticClass: "mr-2",
-                                    attrs: { variant: "warning" }
+                                    attrs: {
+                                      href: "/admin/product-edit/" + product.id,
+                                      variant: "warning"
+                                    }
                                   },
                                   [_vm._v("Edit")]
                                 ),
                                 _vm._v(" "),
                                 _c(
                                   "b-button",
-                                  { attrs: { variant: "danger" } },
+                                  {
+                                    attrs: { variant: "danger" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.deleteProduct(product.id)
+                                      }
+                                    }
+                                  },
                                   [_vm._v("Delete")]
                                 )
                               ],
@@ -73641,9 +73673,11 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(product.name))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(product.price))]),
+                    _c("td", { staticClass: "text-right" }, [
+                      _vm._v("$" + _vm._s(product.price))
+                    ]),
                     _vm._v(" "),
-                    _c("td", [
+                    _c("td", { staticClass: "text-right" }, [
                       _c(
                         "a",
                         {
@@ -73731,7 +73765,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Price")]),
+        _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
+          _vm._v("Price")
+        ]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } })
       ])
@@ -73777,7 +73813,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("b-card-text", [
-        _vm._v("\n        " + _vm._s(_vm.product.price) + "\n    ")
+        _vm._v("\n        $" + _vm._s(_vm.product.price) + "\n    ")
       ]),
       _vm._v(" "),
       _c(

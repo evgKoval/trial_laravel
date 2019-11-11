@@ -2,6 +2,7 @@
     <div>
         <b-tabs content-class="mt-3" justified>
             <b-tab title="Products" active>
+                <b-button href="/admin/product-add/" variant="primary" class="mb-4 mt-4" block>Add a product</b-button>
                 <template v-if="!!products.length">
                   <table class="table">
                     <thead>
@@ -15,13 +16,13 @@
                     <tbody>
                       <tr v-for="product in productsFiltered">
                         <td>
-                            <img :src="product.img" :alt="product.name" width="50%">
+                            <img v-if="product.img != 0" :src="product.img" :alt="product.name" width="50%">
                         </td>
                         <td>{{ product.name }}</td>
-                        <td>{{ product.price }}</td>
+                        <td>${{ product.price }}</td>
                         <td>
-                            <b-button variant="warning" class="mr-2">Edit</b-button>
-                            <b-button variant="danger">Delete</b-button>
+                            <b-button :href="'/admin/product-edit/' + product.id" variant="warning" class="mr-2">Edit</b-button>
+                            <b-button variant="danger" @click="deleteProduct(product.id)">Delete</b-button>
                         </td>
                       </tr>
                     </tbody>
@@ -55,8 +56,11 @@
             }
         },
         methods: {
-            delete(id) {
-                //
+            deleteProduct(id) {
+                axios.delete('/admin/' + id).then(() => {
+                    const index = this.productForTable.findIndex(product => product.id === id);
+                    this.productForTable.splice(index, 1);
+                });
             }
         }
     }

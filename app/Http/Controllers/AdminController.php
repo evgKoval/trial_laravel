@@ -13,4 +13,62 @@ class AdminController extends Controller
 
         return view('admin.index', compact('products'));
     }
+
+    public function create() 
+    {
+        return view('admin.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'category' => 'required'
+        ]);
+
+        Product::add([
+            'name' => $request->input('name'),
+            'price' => $request->input('price'),
+            'img' => $request->input('image') || ''
+        ], $request->input('category'));
+
+        return redirect('admin');
+    }
+
+    public function edit($productId)
+    {
+        $product = Product::find($productId);
+
+        return view("admin.edit", compact('product'));
+    }
+
+    public function update(Request $request, $productId)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'price' => 'required|numeric',
+            'image' => 'required',
+            'category' => 'required'
+        ]);
+
+        $product = Product::find($productId);
+
+        $product->name = $request->input('name');
+        $product->price = $request->input('price');
+        $product->img = $request->input('image');
+        $product->category = $request->input('category');
+
+        $product->save();
+
+        return redirect('admin');
+    }
+
+    public function destroy($id)
+    {
+        $product = Product::find($id);
+        $product->delete();
+
+        return 1;
+    }
 }

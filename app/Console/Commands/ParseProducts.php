@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Product;
+use App\Models\Product;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Nesk\Puphpeteer\Puppeteer;
@@ -41,6 +41,13 @@ class ParseProducts extends Command
      */
     public function handle()
     {
+        function floatvalue($val) {
+            $val = str_replace("$", "", $val);
+            $val = str_replace(",", ".", $val);
+            $val = preg_replace('/\.(?=.*\.)/', '', $val);
+            return floatval($val);
+        }
+
         $url = $this->argument('url');
 
         $puppeteer = new Puppeteer;
@@ -80,8 +87,10 @@ class ParseProducts extends Command
                 $products[]['name'] = $name->getProperty('innerText')->jsonValue();
             }
 
+            
+
             for ($i = 0; $i < count($prices); $i++) {
-                $products[$i]['price'] = $prices[$i]->getProperty('innerText')->jsonValue();
+                $products[$i]['price'] = floatvalue($prices[$i]->getProperty('innerText')->jsonValue());
             }
 
             for ($i = 0; $i < count($images); $i++) {

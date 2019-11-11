@@ -35,21 +35,12 @@ class PaymentController extends Controller
 
     public function index()
     {
-        function floatvalue($val) {
-            $val = str_replace(",", "", $val);
-            $val = str_replace("$", "", $val);
-
-            return floatval($val);
-        }
-
-        $amount = 0;
-
         $orders = Order::leftJoin('products', 'orders.product_id', '=', 'products.id')->where('user_id', Auth::user()->id)->get();
         
-        foreach ($orders as $order) {
-            $price = floatvalue($order->price);
-            
-            $amount += $price;
+        $amount = 0;
+
+        foreach ($orders as $order) {            
+            $amount += $order->price;
         }
 
         return view('checkout', compact('amount'));
