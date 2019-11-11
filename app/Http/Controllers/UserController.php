@@ -18,7 +18,7 @@ class UserController extends Controller
         return view('profile', compact('userName', 'userEmail'));
     }
 
-    public function edit(Request $request)
+    public function update(Request $request)
     {
         $this->validate($request, [
             'name' => 'required',

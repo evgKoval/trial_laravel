@@ -112,9 +112,7 @@
                     });
 
                     searched = searched.filter((elem) => {
-                        const price = elem.price.slice(1).replace(',', '');
-
-                        return parseFloat(price) >= this.price.min && parseFloat(price) <= this.price.max
+                        return elem.price >= this.price.min && elem.price <= this.price.max
                     });
 
                     searched = searched.filter((elem) => {
@@ -135,8 +133,7 @@
         },
         mounted() {
             this.price.max = Math.max.apply(Math, this.products.map((elem) => {
-                const price = elem.price.slice(1).replace(',', '');
-                return parseFloat(price);
+                return parseFloat(elem.price);
             }));
 
             this.date.min = Math.min.apply(Math, this.products.map((elem) => {

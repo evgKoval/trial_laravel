@@ -6,7 +6,7 @@
               <tr>
                 <th scope="col"></th>
                 <th scope="col">Name</th>
-                <th scope="col">Price</th>
+                <th scope="col" class="text-right">Price</th>
                 <th scope="col"></th>
               </tr>
             </thead>
@@ -16,8 +16,8 @@
                     <img :src="product.img" :alt="product.name">
                 </td>
                 <td>{{ product.name }}</td>
-                <td>{{ product.price }}</td>
-                <td>
+                <td class="text-right">${{ product.price }}</td>
+                <td class="text-right">
                     <a @click="deleteFromCart(product.id)">
                         <custom-icon name="x" base-class="custom-icon"></custom-icon>
                     </a> 
@@ -77,8 +77,7 @@
                 let amount = 0;
 
                 this.productForTable.forEach((elem) => {
-                    const price = elem.price.slice(1).replace(',', '');
-                    amount += parseFloat(price);
+                    amount += parseFloat(elem.price);
                 });
 
                 return amount

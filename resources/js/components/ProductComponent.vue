@@ -10,7 +10,7 @@
         <b-badge variant="info">{{ product.category }}</b-badge>
 
         <b-card-text>
-            {{ product.price }}
+            ${{ product.price }}
         </b-card-text>
 
         <div class="d-flex align-items-center">
