@@ -7854,6 +7854,15 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 //
 //
 //
@@ -7893,35 +7902,279 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'orders',
   props: {
     products: {
       type: Array
+    },
+    orders: {
+      type: Array
     }
+  },
+  components: {
+    Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
-      productForTable: this.products
+      productsForTable: this.products,
+      ordersForTable: this.orders,
+      searchProducts: '',
+      priceProducts: {
+        min: 1,
+        max: 1
+      },
+      dateProducts: {
+        min: null,
+        max: new Date()
+      },
+      optionsProducts: ['All'],
+      selectedProducts: 'All',
+      searchOrders: '',
+      dateOrders: {
+        min: null,
+        max: new Date()
+      },
+      optionsOrders: ['All'],
+      selectedOrders: 'All'
     };
   },
   computed: {
     productsFiltered: function productsFiltered() {
-      return this.productForTable;
+      var _this = this;
+
+      var searched = [];
+      searched = this.productsForTable.filter(function (elem) {
+        return elem.name.toLowerCase().includes(_this.searchProducts.toLowerCase()) || elem.id == _this.searchProducts;
+      });
+      searched = searched.filter(function (elem) {
+        return elem.price >= _this.priceProducts.min && elem.price <= _this.priceProducts.max;
+      });
+      searched = searched.filter(function (elem) {
+        var date = new Date(elem.created_at);
+        return date >= _this.dateProducts.min && date <= _this.dateProducts.max;
+      });
+      searched = searched.filter(function (elem) {
+        return _this.selectedProducts == 'All' ? searched : _this.selectedProducts == elem.category;
+      });
+      return searched;
+    },
+    ordersFiltered: function ordersFiltered() {
+      var _this2 = this;
+
+      var searched = [];
+      searched = this.ordersForTable.filter(function (item) {
+        return item.name.toLowerCase().includes(_this2.searchOrders.toLowerCase()) || item.city.toLowerCase().includes(_this2.searchOrders.toLowerCase()) || item.adress.toLowerCase().includes(_this2.searchOrders.toLowerCase()) || item.phone.toLowerCase().includes(_this2.searchOrders.toLowerCase()) || item.created_at.toLowerCase().includes(_this2.searchOrders.toLowerCase()) || item.id == _this2.searchOrders;
+      });
+      searched = searched.filter(function (item) {
+        var date = new Date(item.created_at);
+        return date >= _this2.dateOrders.min && date <= _this2.dateOrders.max;
+      });
+      searched = searched.filter(function (item) {
+        return _this2.selectedOrders == 'All' ? searched : _this2.selected == item.category;
+      });
+      return searched;
     }
   },
   methods: {
     deleteProduct: function deleteProduct(id) {
-      var _this = this;
+      var _this3 = this;
 
       axios["delete"]('/admin/' + id).then(function () {
-        var index = _this.productForTable.findIndex(function (product) {
+        var index = _this3.productsForTable.findIndex(function (product) {
           return product.id === id;
         });
 
-        _this.productForTable.splice(index, 1);
+        _this3.productsForTable.splice(index, 1);
       });
+    },
+    onClose: function onClose() {
+      this.$root.$emit('bv::hide::popover');
+    },
+    changeStatus: function changeStatus(id, status) {
+      var _this4 = this;
+
+      axios.put('/change-status/' + id + '/' + status).then(function () {
+        var index = _this4.ordersForTable.findIndex(function (order) {
+          return order.id === id;
+        });
+
+        _this4.ordersForTable[index].status = status;
+      });
+    },
+    getStatus: function getStatus(id) {
+      return {
+        variant: this.ordersForTable[id].status == 0 ? 'warning' : this.ordersForTable[id].status == 1 ? 'success' : 'danger',
+        title: this.ordersForTable[id].status == 0 ? 'In process' : this.ordersForTable[id].status == 1 ? 'Completed' : 'Canceled'
+      };
     }
+  },
+  mounted: function mounted() {
+    this.dateOrders.min = Math.min.apply(Math, this.ordersForTable.map(function (elem) {
+      return new Date(elem.created_at);
+    }));
+    this.dateOrders.min = new Date(this.dateOrders.min);
+
+    var uniqueOrders = _toConsumableArray(new Set(this.ordersForTable.map(function (elem) {
+      return elem.status == 0 ? 'In process' : elem.status == 1 ? 'Completed' : 'Canceled';
+    })));
+
+    this.optionsOrders = this.optionsOrders.concat(uniqueOrders);
+    this.priceProducts.max = Math.max.apply(Math, this.productsForTable.map(function (elem) {
+      return parseFloat(elem.price);
+    }));
+    this.dateProducts.min = Math.min.apply(Math, this.productsForTable.map(function (elem) {
+      return new Date(elem.created_at);
+    }));
+    this.dateProducts.min = new Date(this.dateProducts.min);
+
+    var uniqueProducts = _toConsumableArray(new Set(this.productsForTable.map(function (elem) {
+      return elem.category;
+    })));
+
+    this.optionsProducts = this.optionsProducts.concat(uniqueProducts);
   }
 });
 
@@ -41062,7 +41315,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\ntbody {\n      display:block;\n      max-height:450px;\n      overflow-y:auto;\n}\nthead, tbody tr {\n      display:table;\n      width:100%;\n      table-layout:fixed;\n}\nthead {\n      width: calc( 100% - 1em )\n} \n", ""]);
+exports.push([module.i, "\ntbody {\n    display:block;\n    max-height:450px;\n    overflow-y:auto;\n}\nthead, tbody tr {\n    display:table;\n    width:100%;\n    table-layout:fixed;\n}\nthead {\n    width: calc( 100% - 1em )\n}\n.popover-container input {\n    display: block;\n    width: 100%;\n    padding: 0.375rem 0.75rem;\n    font-size: 1rem;\n    line-height: 1.5;\n    color: #495057;\n    background-color: #fff;\n    background-clip: padding-box;\n    border: 1px solid #ced4da;\n    border-radius: 0.25rem;\n    -webkit-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n", ""]);
 
 // exports
 
@@ -73539,11 +73792,204 @@ var render = function() {
                 [_vm._v("Add a product")]
               ),
               _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row mb-4 mt-4" },
+                [
+                  _c(
+                    "b-col",
+                    { attrs: { sm: "12" } },
+                    [
+                      _c("b-form-input", {
+                        attrs: {
+                          id: "input-large",
+                          placeholder: "Search products"
+                        },
+                        model: {
+                          value: _vm.searchProducts,
+                          callback: function($$v) {
+                            _vm.searchProducts = $$v
+                          },
+                          expression: "searchProducts"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row mb-4" },
+                [
+                  _c(
+                    "b-col",
+                    { staticClass: "mb-2", attrs: { sm: "3" } },
+                    [
+                      _c(
+                        "b-form-group",
+                        {
+                          attrs: {
+                            label: "Min price",
+                            "label-for": "input-price-min"
+                          }
+                        },
+                        [
+                          _c("b-form-input", {
+                            attrs: { type: "number", id: "input-price-min" },
+                            model: {
+                              value: _vm.priceProducts.min,
+                              callback: function($$v) {
+                                _vm.$set(_vm.priceProducts, "min", $$v)
+                              },
+                              expression: "priceProducts.min"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-col",
+                    { staticClass: "mb-2", attrs: { sm: "3" } },
+                    [
+                      _c(
+                        "b-form-group",
+                        {
+                          attrs: {
+                            label: "Max price",
+                            "label-for": "input-price-max"
+                          }
+                        },
+                        [
+                          _c("b-form-input", {
+                            attrs: { type: "number", id: "input-price-max" },
+                            model: {
+                              value: _vm.priceProducts.max,
+                              callback: function($$v) {
+                                _vm.$set(_vm.priceProducts, "max", $$v)
+                              },
+                              expression: "priceProducts.max"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-col",
+                    { staticClass: "mb-2", attrs: { sm: "3" } },
+                    [
+                      _c(
+                        "b-form-group",
+                        {
+                          attrs: {
+                            label: "Min date",
+                            "label-for": "input-date-min"
+                          }
+                        },
+                        [
+                          _c("datepicker", {
+                            attrs: {
+                              id: "input-date-min",
+                              "bootstrap-styling": ""
+                            },
+                            model: {
+                              value: _vm.dateProducts.min,
+                              callback: function($$v) {
+                                _vm.$set(_vm.dateProducts, "min", $$v)
+                              },
+                              expression: "dateProducts.min"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-col",
+                    { staticClass: "mb-2", attrs: { sm: "3" } },
+                    [
+                      _c(
+                        "b-form-group",
+                        {
+                          attrs: {
+                            label: "Max date",
+                            "label-for": "input-date-max"
+                          }
+                        },
+                        [
+                          _c("datepicker", {
+                            attrs: {
+                              id: "input-date-max",
+                              "bootstrap-styling": ""
+                            },
+                            model: {
+                              value: _vm.dateProducts.max,
+                              callback: function($$v) {
+                                _vm.$set(_vm.dateProducts, "max", $$v)
+                              },
+                              expression: "dateProducts.max"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-col",
+                    { attrs: { sm: "3" } },
+                    [
+                      _c(
+                        "b-form-group",
+                        {
+                          attrs: {
+                            label: "Sort by",
+                            "label-for": "input-date-max"
+                          }
+                        },
+                        [
+                          _c("b-form-select", {
+                            attrs: { options: _vm.optionsProducts },
+                            model: {
+                              value: _vm.selectedProducts,
+                              callback: function($$v) {
+                                _vm.selectedProducts = $$v
+                              },
+                              expression: "selectedProducts"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
               !!_vm.products.length
                 ? [
                     _c("table", { staticClass: "table" }, [
                       _c("thead", [
                         _c("tr", [
+                          _c("th", { attrs: { scope: "col" } }, [_vm._v("Id")]),
+                          _vm._v(" "),
                           _c("th", { attrs: { scope: "col" } }),
                           _vm._v(" "),
                           _c("th", { attrs: { scope: "col" } }, [
@@ -73564,6 +74010,8 @@ var render = function() {
                         "tbody",
                         _vm._l(_vm.productsFiltered, function(product) {
                           return _c("tr", [
+                            _c("td", [_vm._v(_vm._s(product.id))]),
+                            _vm._v(" "),
                             _c("td", [
                               product.img != 0
                                 ? _c("img", {
@@ -73621,9 +74069,359 @@ var render = function() {
             2
           ),
           _vm._v(" "),
-          _c("b-tab", { attrs: { title: "Orders" } }, [
-            _c("p", [_vm._v("I'm the second tab")])
-          ])
+          _c(
+            "b-tab",
+            { attrs: { title: "Orders" } },
+            [
+              _c(
+                "div",
+                { staticClass: "row mb-4 mt-4" },
+                [
+                  _c(
+                    "b-col",
+                    { attrs: { sm: "12" } },
+                    [
+                      _c("b-form-input", {
+                        attrs: {
+                          id: "input-large",
+                          placeholder: "Search orders"
+                        },
+                        model: {
+                          value: _vm.searchOrders,
+                          callback: function($$v) {
+                            _vm.searchOrders = $$v
+                          },
+                          expression: "searchOrders"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row mb-4" },
+                [
+                  _c(
+                    "b-col",
+                    { attrs: { sm: "4" } },
+                    [
+                      _c(
+                        "b-form-group",
+                        {
+                          attrs: {
+                            label: "Status",
+                            "label-for": "input-date-max"
+                          }
+                        },
+                        [
+                          _c("b-form-select", {
+                            attrs: { options: _vm.optionsOrders },
+                            model: {
+                              value: _vm.selectedOrders,
+                              callback: function($$v) {
+                                _vm.selectedOrders = $$v
+                              },
+                              expression: "selectedOrders"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-col",
+                    { attrs: { sm: "4" } },
+                    [
+                      _c(
+                        "b-form-group",
+                        {
+                          attrs: {
+                            label: "Min date",
+                            "label-for": "input-date-min"
+                          }
+                        },
+                        [
+                          _c("datepicker", {
+                            attrs: {
+                              id: "input-date-min",
+                              "bootstrap-styling": ""
+                            },
+                            model: {
+                              value: _vm.dateOrders.min,
+                              callback: function($$v) {
+                                _vm.$set(_vm.dateOrders, "min", $$v)
+                              },
+                              expression: "dateOrders.min"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-col",
+                    { attrs: { sm: "4" } },
+                    [
+                      _c(
+                        "b-form-group",
+                        {
+                          attrs: {
+                            label: "Max date",
+                            "label-for": "input-date-max"
+                          }
+                        },
+                        [
+                          _c("datepicker", {
+                            attrs: {
+                              id: "input-date-max",
+                              "bootstrap-styling": ""
+                            },
+                            model: {
+                              value: _vm.dateOrders.max,
+                              callback: function($$v) {
+                                _vm.$set(_vm.dateOrders, "max", $$v)
+                              },
+                              expression: "dateOrders.max"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              !!_vm.products.length
+                ? [
+                    _c(
+                      "table",
+                      { staticClass: "table", attrs: { id: "table-orders" } },
+                      [
+                        _c("thead", [
+                          _c("tr", [
+                            _c("th", { attrs: { scope: "col" } }, [
+                              _vm._v("Id")
+                            ]),
+                            _vm._v(" "),
+                            _c("th", { attrs: { scope: "col" } }, [
+                              _vm._v("Name")
+                            ]),
+                            _vm._v(" "),
+                            _c("th", { attrs: { scope: "col" } }, [
+                              _vm._v("City")
+                            ]),
+                            _vm._v(" "),
+                            _c("th", { attrs: { scope: "col" } }, [
+                              _vm._v("Adress")
+                            ]),
+                            _vm._v(" "),
+                            _c("th", { attrs: { scope: "col" } }, [
+                              _vm._v("Phone")
+                            ]),
+                            _vm._v(" "),
+                            _c("th", { attrs: { scope: "col" } }, [
+                              _vm._v("Created")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-right",
+                                attrs: { scope: "col" }
+                              },
+                              [_vm._v("Status")]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          _vm._l(_vm.ordersFiltered, function(order, index) {
+                            return _c("tr", [
+                              _c("td", [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(order.id) +
+                                    "\n                    "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(order.name) +
+                                    "\n                    "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(order.city))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(order.adress))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(
+                                    order.phone == 0
+                                      ? "There is no phone"
+                                      : order.phone
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(order.created_at))]),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                { staticClass: "text-right" },
+                                [
+                                  _c(
+                                    "b-button",
+                                    {
+                                      attrs: {
+                                        size: "sm",
+                                        variant: _vm.getStatus(index).variant,
+                                        id: "exPopoverReactive" + index
+                                      }
+                                    },
+                                    [_vm._v(_vm._s(_vm.getStatus(index).title))]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "b-popover",
+                                    {
+                                      ref: "popover",
+                                      refInFor: true,
+                                      attrs: {
+                                        target: "exPopoverReactive" + index,
+                                        triggers: "click",
+                                        placement: "auto",
+                                        container: "myContainer"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "template",
+                                        { slot: "title" },
+                                        [
+                                          _c(
+                                            "b-btn",
+                                            {
+                                              staticClass: "close",
+                                              attrs: { "aria-label": "Close" },
+                                              on: { click: _vm.onClose }
+                                            },
+                                            [
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass: "d-inline-block",
+                                                  attrs: {
+                                                    "aria-hidden": "true"
+                                                  }
+                                                },
+                                                [_vm._v("×")]
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(
+                                            "Change status\n                         "
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        [
+                                          _c(
+                                            "b-button",
+                                            {
+                                              attrs: {
+                                                variant: "warning",
+                                                block: ""
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.changeStatus(
+                                                    order.id,
+                                                    0
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("In process")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "b-button",
+                                            {
+                                              attrs: {
+                                                variant: "success",
+                                                block: ""
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.changeStatus(
+                                                    order.id,
+                                                    1
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("Completed")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "b-button",
+                                            {
+                                              attrs: {
+                                                variant: "danger",
+                                                block: ""
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.changeStatus(
+                                                    order.id,
+                                                    2
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("Canceled")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    2
+                                  )
+                                ],
+                                1
+                              )
+                            ])
+                          }),
+                          0
+                        )
+                      ]
+                    )
+                  ]
+                : [_c("h5", [_vm._v("There are no products")])]
+            ],
+            2
+          )
         ],
         1
       )
