@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\MadeOrders;
 
 class AdminController extends Controller
 {
@@ -11,7 +12,9 @@ class AdminController extends Controller
     {
         $products = Product::all();
 
-        return view('admin.index', compact('products'));
+        $madeOrders = MadeOrders::all();
+
+        return view('admin.index', compact('products', 'madeOrders'));
     }
 
     public function create() 
@@ -68,6 +71,17 @@ class AdminController extends Controller
     {
         $product = Product::find($id);
         $product->delete();
+
+        return 1;
+    }
+
+    public function changeStatus($orderId, $status)
+    {
+        $order = MadeOrders::find($orderId);
+
+        $order->status = $status;
+
+        $order->save();
 
         return 1;
     }

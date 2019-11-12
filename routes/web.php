@@ -41,5 +41,6 @@ Route::get('/admin', 'AdminController@index')->middleware('admin')->name('admin'
 Route::get('/admin/product-edit/{id}', 'AdminController@edit')->middleware('admin')->name('admin.edit');
 Route::get('/admin/product-add', 'AdminController@create')->middleware('admin')->name('admin.create');
 Route::post('/admin', 'AdminController@store')->middleware('admin')->name('admin.store');
+Route::put('/change-status/{id}/{status}', 'AdminController@changeStatus')->middleware('admin')->name('admin.changeStatus');
 Route::put('/admin/{id}', 'AdminController@update')->middleware('admin')->name('admin.update');
 Route::delete('/admin/{id}', 'AdminController@destroy')->middleware('admin')->name('admin.delete');
