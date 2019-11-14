@@ -12,6 +12,13 @@
             <b-alert show variant="danger">{!! $message !!}</b-alert>
             <?php Session::forget('error');?>
         @endif
+
+        @if (Session::get('cart'))
+            @foreach (Session::get('cart') as $cart)   
+                <b-alert variant="warning" show>{{ $cart }}</b-alert>
+            @endforeach
+            <?php Session::forget('cart');?>
+        @endif
         <div class="row">
             <h1 class="mb-4">Your cart</h1>
         </div>

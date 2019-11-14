@@ -99,13 +99,18 @@ class ParseProducts extends Command
 
             $browser->close();
 
+            $stock = [
+                'San Francisco, -122.447836, 37.783401',
+                'Ogayo, -82.956527, 39.948801'
+            ];
+
             if(count($products) >= 6) {
                 for ($i = 0; $i < 6; $i++) {
-                    Product::add($products[$i], $categories[$key]);
+                    Product::add($products[$i], $categories[$key], $stock[mt_rand(0, 1)]);
                 }
             } else {
                 for ($i = 0; count($products); $i++) {
-                    Product::add($products[$i], $categories[$key]);
+                    Product::add($products[$i], $categories[$key], $stock[mt_rand(0, 1)]);
                 }
             }
 
