@@ -17,6 +17,7 @@ import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons';
 import { faTwitterSquare } from '@fortawesome/free-brands-svg-icons';
 import { faTelegram } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import AsyncComputed from 'vue-async-computed'
 
 library.add(faFacebookSquare);
 library.add(faTwitterSquare);
@@ -27,6 +28,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(SocialSharing);
 Vue.use(feather, 'v-icon');
 Vue.use(BootstrapVue);
+Vue.use(AsyncComputed);
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';

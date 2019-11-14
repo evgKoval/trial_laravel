@@ -9,7 +9,9 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "cviebrock/laravel-elasticsearch": "^4.1",
         "doctrine/dbal": "^2.10",
+        "elasticsearch/elasticsearch": "~7.0",
         "fideloper/proxy": "^4.0",
         "illuminate/support": "^6.5",
         "jorenvanhocht/laravel-share": "^3.1",
