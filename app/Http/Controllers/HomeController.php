@@ -97,18 +97,6 @@ class HomeController extends Controller
             $products[] = $product['_source'];
         }
 
-        // return json_encode([
-        //     [
-        //         'name' => 'AmazonBasics Blue',
-        //         'img' => '',
-        //         'id' => 10000,
-        //         'price' => 9,
-        //         'category' => 'lol',
-        //         'created_at' => '2019-11-13 15:58:56',
-        //         'updated_at' => '2019-11-13 15:58:56'
-        //     ]
-        // ]);
-
         return json_encode($products);
     }
 

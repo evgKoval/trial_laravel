@@ -24,6 +24,8 @@ use Auth;
 use FedEx\RateService\Request as FedExRequest;
 use FedEx\RateService\ComplexType;
 use FedEx\RateService\SimpleType;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 
 class PaymentController extends Controller
 {
@@ -85,6 +87,35 @@ class PaymentController extends Controller
             'phone' => $request->input('phone') || '', 
             'paid' => $amount
         ]);
+
+        // $distanceSF = \DB::select(\DB::raw('
+        //     select ST_Distance_Sphere(point(:lonA, :latA), point(:lonB,:latB)) * 0.00621371192
+        // '), [
+        //     'lonA' => -122.447836,
+        //     'latA' => 37.783401,
+        //     'lonB' => $result->first()->getCoordinates()->getLongitude(),
+        //     'latB' => $result->first()->getCoordinates()->getLatitude(),
+        // ]);
+
+        // $distanceOG = \DB::select(\DB::raw('
+        //     select ST_Distance_Sphere(point(:lonA, :latA), point(:lonB,:latB)) * 0.00621371192
+        // '), [
+        //     'lonA' => -82.956527,
+        //     'latA' => 39.948801,
+        //     'lonB' => $result->first()->getCoordinates()->getLongitude(),
+        //     'latB' => $result->first()->getCoordinates()->getLatitude(),
+        // ]);
+
+        // $milesFromSF = array_values((array) $distanceSF[0])[0];
+        // $milesFromOG = array_values((array) $distanceOG[0])[0];
+
+        // if($milesFromSF < $milesFromOG) {
+        //     dd('Your purchase will come from San Francisco');
+        // } else {
+        //     dd('Your purchase will come from Ogayo');
+        // }
+
+        // dd($milesFromSF, $milesFromOG);
 
         $rateRequest = new ComplexType\RateRequest();
 
@@ -248,9 +279,43 @@ class PaymentController extends Controller
             $order->status = 1;
             $order->save();
 
+            $orders = Order::leftJoin('products', 'orders.product_id', '=', 'products.id')->where('user_id', Auth::user()->id)->get();
+
+            $geocoder = new \Geocoder\ProviderAggregator();
+            $adapter  = new \Http\Adapter\Guzzle6\Client();
+
+            $chain = new \Geocoder\Provider\Chain\Chain([
+                new \Geocoder\Provider\BingMaps\BingMaps($adapter, 'Ai4GWZ8bZ6SOGjNoLu6wcxdT5srwatjhkOZQV-UuUUcDZFCmdWhJ89fFu3kAvNdB')
+            ]);
+
+            $geocoder->registerProvider($chain);
+
+            $result = $geocoder->geocodeQuery(GeocodeQuery::create($order->adress));
+
+            $productsSession = [];
+
+            foreach ($orders as $order) {  
+                $productCoordinates = explode(',', $order->stock);
+
+                $distance = \DB::select(\DB::raw('
+                    select ST_Distance_Sphere(point(:lonA, :latA), point(:lonB,:latB)) * 0.00621371192
+                '), [
+                    'lonA' => $productCoordinates[1],
+                    'latA' => $productCoordinates[2],
+                    'lonB' => $result->first()->getCoordinates()->getLongitude(),
+                    'latB' => $result->first()->getCoordinates()->getLatitude()
+                ]);
+
+                $productsSession[] = $order->name . ' will come from ' . $productCoordinates[0] . '. Miles: ' . array_values((array) $distance[0])[0];
+            }
+
             Order::where('user_id', Auth::user()->id)->delete();
 
             \Session::put('success', 'Payment success');
+
+            //$fromOrders = collect($productsSession);
+            \Session::put('cart', $productsSession);
+            
             return Redirect::route('cart');
         }
  

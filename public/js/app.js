@@ -8063,7 +8063,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'orders',
@@ -75093,67 +75092,59 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "tbody",
-                        [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(_vm.productsFiltered) +
-                              "\n                  "
-                          ),
-                          _vm._l(_vm.productsFiltered, function(product) {
-                            return _c("tr", [
-                              _c("td", [_vm._v(_vm._s(product.id))]),
-                              _vm._v(" "),
-                              _c("td", [
-                                product.img != 0
-                                  ? _c("img", {
-                                      attrs: {
-                                        src: product.img,
-                                        alt: product.name,
-                                        width: "50%"
+                        _vm._l(_vm.productsFiltered, function(product) {
+                          return _c("tr", [
+                            _c("td", [_vm._v(_vm._s(product.id))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              product.img != 0
+                                ? _c("img", {
+                                    attrs: {
+                                      src: product.img,
+                                      alt: product.name,
+                                      width: "50%"
+                                    }
+                                  })
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(product.name))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v("$" + _vm._s(product.price))]),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              [
+                                _c(
+                                  "b-button",
+                                  {
+                                    staticClass: "mr-2",
+                                    attrs: {
+                                      href: "/admin/product-edit/" + product.id,
+                                      variant: "warning"
+                                    }
+                                  },
+                                  [_vm._v("Edit")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "b-button",
+                                  {
+                                    attrs: { variant: "danger" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.deleteProduct(product.id)
                                       }
-                                    })
-                                  : _vm._e()
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(product.name))]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v("$" + _vm._s(product.price))]),
-                              _vm._v(" "),
-                              _c(
-                                "td",
-                                [
-                                  _c(
-                                    "b-button",
-                                    {
-                                      staticClass: "mr-2",
-                                      attrs: {
-                                        href:
-                                          "/admin/product-edit/" + product.id,
-                                        variant: "warning"
-                                      }
-                                    },
-                                    [_vm._v("Edit")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "b-button",
-                                    {
-                                      attrs: { variant: "danger" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.deleteProduct(product.id)
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Delete")]
-                                  )
-                                ],
-                                1
-                              )
-                            ])
-                          })
-                        ],
-                        2
+                                    }
+                                  },
+                                  [_vm._v("Delete")]
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        }),
+                        0
                       )
                     ])
                   ]
