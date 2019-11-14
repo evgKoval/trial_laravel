@@ -5,7 +5,7 @@
                 <b-button href="/admin/product-add/" variant="primary" class="mb-4 mt-4" block>Add a product</b-button>
                 <div class="row mb-4 mt-4">
                     <b-col sm="12">
-                        <b-form-input id="input-large" placeholder="Search products" v-model="searchProducts"></b-form-input>
+                        <b-form-input id="input-large" placeholder="Search products" :value="searchProducts" @change.native="searchProducts = $event.target.value"></b-form-input>
                     </b-col>
                 </div>
                 <div class="row mb-4">
@@ -218,13 +218,17 @@
                 selectedOrders: 'All'
             }
         },
-        computed: {
-            productsFiltered() {
+        asyncComputed: {
+            async productsFiltered() {
                 let searched = [];
 
-                searched = this.productsForTable.filter((elem) => {
-                    return elem.name.toLowerCase().includes(this.searchProducts.toLowerCase()) || elem.id == this.searchProducts;
-                });
+                if (this.searchProducts != '') {
+                    await this.axiosProducts().then((res) => {
+                        searched = res;
+                    });
+                } else {
+                    searched = this.productsForTable;
+                }
 
                 searched = searched.filter((elem) => {
                     return elem.price >= this.priceProducts.min && elem.price <= this.priceProducts.max
@@ -241,7 +245,9 @@
                 });
 
                 return searched
-            },
+            }
+        },
+        computed: {
             ordersFiltered() {
                 let searched = [];
 
@@ -261,6 +267,11 @@
             }
         },
         methods: {
+            axiosProducts() {
+                return axios.get('/search-products/' + this.searchProducts).then((res) => {
+                    return res.data;
+                });
+            },
             deleteProduct(id) {
                 axios.delete('/admin/' + id).then(() => {
                     const index = this.productsForTable.findIndex(product => product.id === id);

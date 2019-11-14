@@ -22,6 +22,7 @@ Auth::routes();
 Route::get('/redirect', 'SocialAuthGoogleController@redirect');
 Route::get('/callback', 'SocialAuthGoogleController@callback');
 
+Route::get('/search-products/{query}', 'HomeController@searchProducts');
 Route::get('/search', 'HomeController@search')->name('search');
 
 Route::get('/category/{category}', 'CategoryController@index');

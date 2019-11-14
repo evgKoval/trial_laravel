@@ -7,6 +7,7 @@ use Auth;
 use App\Models\Product;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
+use Cviebrock\LaravelElasticsearch\Facade as Elasticsearch;
 
 class HomeController extends Controller
 {
@@ -46,14 +47,69 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
-        $userId = Auth::user()->id;
-
-        $products = Product::leftJoin('wishlist', 'products.id', '=', 'wishlist.product_id')
-            ->select('products.*', 'wishlist.product_id')
-            ->get();
         $query = $request->input('query');
 
+        $params = [
+            'index' => 'products',
+            'body'  => [
+                'query' => [
+                    'match' => [
+                        'name' => $query
+                    ]
+                ]
+            ]
+        ];
+
+        $stats = Elasticsearch::search($params);
+        $doc   = $stats['hits']['hits'];
+
+        $products = [];
+
+        foreach ($stats['hits']['hits'] as $product) {
+            $products[] = $product['_source'];
+        }
+
+        $userId = Auth::user()->id;
+
         return view('search', compact('query', 'products', 'userId'));
+    }
+
+    public function searchProducts($query) 
+    {
+
+        $params = [
+            'index' => 'products',
+            'body'  => [
+                'query' => [
+                    'match' => [
+                        'name' => $query
+                    ]
+                ]
+            ]
+        ];
+
+        $stats = Elasticsearch::search($params);
+        $doc   = $stats['hits']['hits'];
+
+        $products = [];
+
+        foreach ($stats['hits']['hits'] as $product) {
+            $products[] = $product['_source'];
+        }
+
+        // return json_encode([
+        //     [
+        //         'name' => 'AmazonBasics Blue',
+        //         'img' => '',
+        //         'id' => 10000,
+        //         'price' => 9,
+        //         'category' => 'lol',
+        //         'created_at' => '2019-11-13 15:58:56',
+        //         'updated_at' => '2019-11-13 15:58:56'
+        //     ]
+        // ]);
+
+        return json_encode($products);
     }
 
     public function wishlist()

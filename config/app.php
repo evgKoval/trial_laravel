@@ -232,6 +232,8 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Share' => Jorenvh\Share\ShareFacade::class,
 
+        'Elasticsearch' => Cviebrock\LaravelElasticsearch\Facade::class,
+
     ],
 
 ];
